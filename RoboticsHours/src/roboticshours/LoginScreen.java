@@ -178,7 +178,7 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
             System.out.println(Run.getAccountList().get(0).getEntries());
             System.out.println("~~~~");
             Run.hideLoginScreen();
-            //new MainScreen(Run.getAccountList().get(0)).setVisible(true);
+            new MainScreen(Run.getAccountList().get(0)).setVisible(true);
         }
         else{
             passwordField.setText("");

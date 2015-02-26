@@ -325,6 +325,10 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
+        for(int i = dataModel.getRowCount(); i > 0; i--){
+            dataModel.setValueAt(false, i - 1, 0);
+        }
+        entryTable.clearSelection();
         ((CardLayout)(mainPanel.getLayout())).show(mainPanel, "viewEditPanel");
     }//GEN-LAST:event_viewButtonActionPerformed
 
@@ -372,17 +376,26 @@ public class MainScreen extends javax.swing.JFrame {
         System.out.println(account.getEntries().get(account.getEntries().size() - 1));
         System.out.println("Now exporting the file:");
         ImportExport.exportAll();
-        JOptionPane.showMessageDialog(rootPane, "Submitted successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(rootPane, "Added successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
         newBackButtonActionPerformed(evt);
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        String message = "Are you sure you want to delete the selected entries?\nThis cannot be undone!";
+        boolean delete = (JOptionPane.showConfirmDialog(rootPane, message, "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) == 0;
+        
         for(int i = dataModel.getRowCount(); i > 0; i--){
             if((boolean)dataModel.getValueAt(i - 1, 0)){
-                account.getEntries().remove(i - 1);
-                dataModel.removeRow(i - 1);
+                if(delete){
+                    account.getEntries().remove(i - 1);
+                    dataModel.removeRow(i - 1);
+                }
+                else{
+                    dataModel.setValueAt(false, i - 1, 0);
+                }
             }
         }
+        entryTable.clearSelection();
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -82,6 +82,7 @@ public class MainScreen extends javax.swing.JFrame {
         entryTableHeader = new javax.swing.JScrollPane();
         entryTable = new javax.swing.JTable();
         tableBackButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
         newEntryPanel = new javax.swing.JPanel();
         manualDateEntry = new javax.swing.JTextField();
         userName = new javax.swing.JLabel();
@@ -185,6 +186,8 @@ public class MainScreen extends javax.swing.JFrame {
             }
         });
 
+        deleteButton.setText("Delete Selected");
+
         javax.swing.GroupLayout viewEditPanelLayout = new javax.swing.GroupLayout(viewEditPanel);
         viewEditPanel.setLayout(viewEditPanelLayout);
         viewEditPanelLayout.setHorizontalGroup(
@@ -193,14 +196,18 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(viewEditPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tableBackButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(deleteButton)
+                .addContainerGap())
         );
         viewEditPanelLayout.setVerticalGroup(
             viewEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(viewEditPanelLayout.createSequentialGroup()
                 .addComponent(entryTableHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(tableBackButton)
+                .addGroup(viewEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tableBackButton)
+                    .addComponent(deleteButton))
                 .addContainerGap())
         );
 
@@ -366,6 +373,7 @@ public class MainScreen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton currentDate;
     private javax.swing.JLabel dateLabel;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JTable entryTable;
     private javax.swing.JScrollPane entryTableHeader;
     private javax.swing.JLabel greetingLabel;

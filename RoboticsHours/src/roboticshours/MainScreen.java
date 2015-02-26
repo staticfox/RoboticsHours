@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -366,9 +367,15 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_currentDateActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        Pattern datePattern = Pattern.compile("^\\d{1,2}/\\d{1,2}/(\\d\\d){1,2}$");
         if(manualDateEntry.getText().equals("")){
             JOptionPane.showMessageDialog(rootPane, "Please select a date.", "Error", JOptionPane.ERROR_MESSAGE);
             manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        }
+        else if(!datePattern.matcher(manualDateEntry.getText()).find()){ //TODO convert date
+            JOptionPane.showMessageDialog(rootPane, "Please enter a date in the format MM/DD/YYYY.", "Error", JOptionPane.ERROR_MESSAGE);
+            manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            manualDateEntry.setText(null);
         }
         else{
             Calendar date = new GregorianCalendar();

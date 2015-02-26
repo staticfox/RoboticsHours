@@ -187,6 +187,11 @@ public class MainScreen extends javax.swing.JFrame {
         });
 
         deleteButton.setText("Delete Selected");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout viewEditPanelLayout = new javax.swing.GroupLayout(viewEditPanel);
         viewEditPanel.setLayout(viewEditPanelLayout);
@@ -370,6 +375,16 @@ public class MainScreen extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(rootPane, "Submitted successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
         newBackButtonActionPerformed(evt);
     }//GEN-LAST:event_submitButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        for(int i = dataModel.getRowCount(); i > 0; i--){
+            if((boolean)dataModel.getValueAt(i - 1, 0)){
+                account.getEntries().remove(i - 1);
+                dataModel.removeRow(i - 1);
+            }
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton currentDate;
     private javax.swing.JLabel dateLabel;

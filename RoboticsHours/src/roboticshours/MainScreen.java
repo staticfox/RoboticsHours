@@ -1,11 +1,14 @@
 package roboticshours;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -17,6 +20,7 @@ public class MainScreen extends javax.swing.JFrame {
     static JFrame mainScreen;
     private Account account;
     DefaultTableModel dataModel;
+    Border defaultBorder;
     /**
      * Creates new form NewJFrame
      * @param a
@@ -24,6 +28,7 @@ public class MainScreen extends javax.swing.JFrame {
     @SuppressWarnings("empty-statement")
     public MainScreen(Account a) {
         initComponents();
+        defaultBorder = manualDateEntry.getBorder();
         account = a;
         userName.setText(a.getAccountName());
         ArrayList<Entry> entries = a.getEntries();
@@ -336,6 +341,7 @@ public class MainScreen extends javax.swing.JFrame {
         ((CardLayout)(mainPanel.getLayout())).show(mainPanel, "startPanel");
         hourSelector.setValue(1);
         currentDate.setSelected(false);
+        manualDateEntry.setBorder(defaultBorder);
         manualDateEntry.setText("");
         manualDateEntry.setEditable(true);
     }//GEN-LAST:event_newBackButtonActionPerformed
@@ -360,24 +366,31 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_currentDateActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        Calendar date = new GregorianCalendar();
-        String[] datePieces = manualDateEntry.getText().split("/");
-        date.set(Integer.parseInt(datePieces[2]), Integer.parseInt(datePieces[0]) - 1, Integer.parseInt(datePieces[1]));//TODO Add error checking
-        account.addEntry(new Entry(account, (int)hourSelector.getValue(), date));
-        Object[] data = new Object[4];
-            data[0] = false;
-            data[1] = (date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR)));
-            data[2] = (int)hourSelector.getValue();
-            data[3] = data[1];
-        dataModel.addRow(data);
-        //dataModel.fireTableDataChanged();
-        System.out.println("New entry added."); //TODO Auto update table
-        System.out.println("Last entry in the list:");
-        System.out.println(account.getEntries().get(account.getEntries().size() - 1));
-        System.out.println("Now exporting the file:");
-        ImportExport.exportAll();
-        JOptionPane.showMessageDialog(rootPane, "Added successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
-        newBackButtonActionPerformed(evt);
+        if(manualDateEntry.getText().equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Please select a date.", "Error", JOptionPane.ERROR_MESSAGE);
+            manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        }
+        else{
+            Calendar date = new GregorianCalendar();
+            String[] datePieces = manualDateEntry.getText().split("/");
+            date.set(Integer.parseInt(datePieces[2]), Integer.parseInt(datePieces[0]) - 1, Integer.parseInt(datePieces[1]));//TODO Add error checking
+            account.addEntry(new Entry(account, (int)hourSelector.getValue(), date));
+            Object[] data = new Object[4];
+                data[0] = false;
+                data[1] = (date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR)));
+                data[2] = (int)hourSelector.getValue();
+                data[3] = data[1];
+            dataModel.addRow(data);
+            //dataModel.fireTableDataChanged();
+            manualDateEntry.setBorder(defaultBorder);System.out.println("New entry added."); //TODO Auto update table
+            System.out.println("Last entry in the list:");
+            System.out.println(account.getEntries().get(account.getEntries().size() - 1));
+            System.out.println("Now exporting the file:");
+            ImportExport.exportAll();
+            manualDateEntry.setBorder(defaultBorder);
+            JOptionPane.showMessageDialog(rootPane, "Added successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+            newBackButtonActionPerformed(evt);
+        }
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed

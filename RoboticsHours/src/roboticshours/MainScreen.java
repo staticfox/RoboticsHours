@@ -334,7 +334,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void newBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBackButtonActionPerformed
         ((CardLayout)(mainPanel.getLayout())).show(mainPanel, "startPanel");
-        hourSelector.setValue(0);
+        hourSelector.setValue(1);
         currentDate.setSelected(false);
         manualDateEntry.setText("");
         manualDateEntry.setEditable(true);

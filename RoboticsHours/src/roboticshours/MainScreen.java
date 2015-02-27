@@ -1,5 +1,6 @@
 package roboticshours;
 
+import com.sun.beans.editors.IntegerEditor;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -8,8 +9,12 @@ import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -17,7 +22,7 @@ import javax.swing.table.TableColumn;
  *
  * @author Alan
  */
-public class MainScreen extends javax.swing.JFrame {
+public class MainScreen extends JFrame implements TableModelListener{
     static JFrame mainScreen;
     private Account account;
     DefaultTableModel dataModel;
@@ -58,7 +63,12 @@ public class MainScreen extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         };
+        dataModel.addTableModelListener(this);
         entryTable.setModel(dataModel);
+        
+        DefaultTableCellRenderer center = new DefaultTableCellRenderer();
+        center.setHorizontalAlignment(JLabel.CENTER);
+        
         TableColumn column;
         for (int i = 0; i < 4; i++) {
             column = entryTable.getColumnModel().getColumn(i);
@@ -67,9 +77,12 @@ public class MainScreen extends javax.swing.JFrame {
             }
             else if(i == 2){
                 column.setPreferredWidth(10);
+                column.setCellRenderer(center);
+            }
+            else{
+                column.setCellRenderer(center);
             }
         }
-        
     }
 
     /**
@@ -365,29 +378,63 @@ public class MainScreen extends javax.swing.JFrame {
             manualDateEntry.setEditable(true);
         }
     }//GEN-LAST:event_currentDateActionPerformed
+    
+    @Override
+    public void tableChanged(TableModelEvent e){
+        if(e.getColumn() == 1){
+            String newDate = (String) dataModel.getValueAt(e.getFirstRow(), 1);
+            if(parseDate(newDate)){
+                Calendar date = new GregorianCalendar();
+                String[] datePieces = newDate.split("/"); //Split the date into 3 pieces.
+                if(datePieces[2].length() == 2){ //shorthand date form
+                    datePieces[2] = ("" + date.get(Calendar.YEAR)).substring(0, 2) + datePieces[2]; //Getting the first two digits of the year. This method ensures working code after 2100
+                }
 
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        Pattern datePattern = Pattern.compile("^\\d{1,2}/\\d{1,2}/(\\d\\d){1,2}$");
-        if(manualDateEntry.getText().equals("")){
-            JOptionPane.showMessageDialog(rootPane, "Please select a date.", "Error", JOptionPane.ERROR_MESSAGE);
-            manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+                date.set(Integer.parseInt(datePieces[2]), Integer.parseInt(datePieces[0]) - 1, Integer.parseInt(datePieces[1]));
+                account.getEntries().get(e.getFirstRow()).setDate(date);
+                dataModel.removeTableModelListener(this); //avoiding recursive fireTableStateChanged by deregistering the listener before editing cell value
+                dataModel.setValueAt((date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR))), e.getFirstRow(), 1);
+                dataModel.addTableModelListener(this); //Strangely, none of the other setValueAt calls seem to have this issue.
+            }
+            else{
+                Calendar oldDate = account.getEntries().get(e.getFirstRow()).getDate();
+                dataModel.setValueAt((oldDate.get(Calendar.MONTH) + 1 + "/" + oldDate.get(Calendar.DAY_OF_MONTH) + "/" + (oldDate.get(Calendar.YEAR))), e.getFirstRow(), 1);
+            }
         }
-        else if(!datePattern.matcher(manualDateEntry.getText()).find()){ //TODO convert date
+        else if (e.getColumn() == 2){
+            int hours = (int) dataModel.getValueAt(e.getFirstRow(), 2);
+            if(hours > 0 && hours < 13){
+                account.getEntries().get(e.getFirstRow()).setHours(hours);
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, "Hour value is not in accepted range (1 - 12)", "Error", JOptionPane.ERROR_MESSAGE);
+                dataModel.setValueAt(account.getEntries().get(e.getFirstRow()).getHours(), e.getFirstRow(), 2);
+            }
+        }
+    }
+    
+    private boolean parseDate(String s){
+        Pattern datePattern = Pattern.compile("^\\d{1,2}/\\d{1,2}/(\\d\\d){1,2}$");
+        if(s.equals("")){
+            JOptionPane.showMessageDialog(rootPane, "Please enter a date.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        else if(!datePattern.matcher(s).find()){ //TODO convert date
             JOptionPane.showMessageDialog(rootPane, "Please enter a date in the format MM/DD/YYYY.", "Error", JOptionPane.ERROR_MESSAGE);
-            manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            return false;
         }
         else{
             Calendar date = new GregorianCalendar();
             boolean acceptable = true; //(acceptable)
             String reason = ""; //Reason for rejection
             final String DNE = "That date does not exist.";
-            String[] datePieces = manualDateEntry.getText().split("/"); //Split the date into 3 pieces.
+            String[] datePieces = s.split("/"); //Split the date into 3 pieces.
             if(datePieces[2].length() == 2){ //shorthand date form
                 datePieces[2] = ("" + date.get(Calendar.YEAR)).substring(0, 2) + datePieces[2]; //Getting the first two digits of the year. This method ensures working code after 2100
             }
             int[] dateNumbers = new int[3];
             for(int i = 0; i < 3; i++){
-                dateNumbers[i] = Integer.valueOf(datePieces[i]); //Store the integer values
+                dateNumbers[i] = Integer.parseInt(datePieces[i]); //Store the integer values
                 if(dateNumbers[i] < 0){ //If they have negative pieces
                     acceptable = false; //UNACCEPTABLE
                     reason = "You cannot have negative numbers in the date.";
@@ -429,40 +476,64 @@ public class MainScreen extends javax.swing.JFrame {
                 date.set(Integer.parseInt(datePieces[2]), Integer.parseInt(datePieces[0]) - 1, Integer.parseInt(datePieces[1]));
                 if(Calendar.getInstance().compareTo(date) < 0){ //Trying to enter dates in the future
                     JOptionPane.showMessageDialog(rootPane, "You cannot enter dates in the future.", "Error", JOptionPane.ERROR_MESSAGE);
-                    manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+                    return false;
                 }
                 else{
-                    account.addEntry(new Entry(account, (int)hourSelector.getValue(), date));
-                    Object[] data = new Object[4];
-                        data[0] = false;
-                        data[1] = (date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR)));
-                        data[2] = (int)hourSelector.getValue();
-                        data[3] = data[1];
-                    dataModel.addRow(data);
-                    //dataModel.fireTableDataChanged();
-                    manualDateEntry.setBorder(defaultBorder);System.out.println("New entry added."); //TODO Auto update table
-                    System.out.println("Last entry in the list:");
-                    System.out.println(account.getEntries().get(account.getEntries().size() - 1));
-                    System.out.println("Now exporting the file:");
-                    ImportExport.exportAll();
-                    manualDateEntry.setBorder(defaultBorder);
-                    JOptionPane.showMessageDialog(rootPane, "Added successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
-                    newBackButtonActionPerformed(evt);
+                    return true;
                 }
             }
             else{
                 JOptionPane.showMessageDialog(rootPane, reason + "\nPlease enter a valid date.", "Error", JOptionPane.ERROR_MESSAGE);
-                manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+                return false;
             }
+        }
+    }
+    
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        if(parseDate(manualDateEntry.getText())){
+            Calendar date = new GregorianCalendar();
+            String[] datePieces = manualDateEntry.getText().split("/"); //Split the date into 3 pieces.
+            Object[] data = new Object[4];
+            data[3] = (date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR)));
+            
+            if(datePieces[2].length() == 2){ //shorthand date form
+                datePieces[2] = ("" + date.get(Calendar.YEAR)).substring(0, 2) + datePieces[2]; //Getting the first two digits of the year. This method ensures working code after 2100
+            }
+            
+            date.set(Integer.parseInt(datePieces[2]), Integer.parseInt(datePieces[0]) - 1, Integer.parseInt(datePieces[1]));
+            
+            account.addEntry(new Entry(account, (int)hourSelector.getValue(), date));
+            
+            data[0] = false;
+            data[1] = (date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR)));
+            data[2] = (int)hourSelector.getValue();
+            dataModel.addRow(data);
+            
+            System.out.println("New entry added."); //TODO Auto update table
+            System.out.println("Last entry in the list:");
+            System.out.println(account.getEntries().get(account.getEntries().size() - 1));
+            System.out.println("Now exporting the file:");
+            ImportExport.exportAll();
+            
+            manualDateEntry.setBorder(defaultBorder);
+            JOptionPane.showMessageDialog(rootPane, "Added successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+            newBackButtonActionPerformed(evt); 
+        }
+        else{
+            manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        boolean delete = false, itemsToDelete = false;
         String message = "Are you sure you want to delete the selected entries?\nThis cannot be undone!";
-        boolean delete = (JOptionPane.showConfirmDialog(rootPane, message, "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) == 0;
         
         for(int i = dataModel.getRowCount(); i > 0; i--){
             if((boolean)dataModel.getValueAt(i - 1, 0)){
+                if(!itemsToDelete){
+                    delete = (JOptionPane.showConfirmDialog(rootPane, message, "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) == 0;
+                    itemsToDelete = true;
+                }
                 if(delete){
                     account.getEntries().remove(i - 1);
                     dataModel.removeRow(i - 1);
@@ -472,9 +543,16 @@ public class MainScreen extends javax.swing.JFrame {
                 }
             }
         }
+        if(!itemsToDelete){
+            JOptionPane.showMessageDialog(rootPane, "There are no entries selected.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
         entryTable.clearSelection();
     }//GEN-LAST:event_deleteButtonActionPerformed
-
+    
+    
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton currentDate;
     private javax.swing.JLabel dateLabel;

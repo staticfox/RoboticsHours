@@ -103,7 +103,6 @@ public class ImportExport { //File Structure:
                             Integer.parseInt(f.getName().replaceAll("[^0-9]", "")), //ID
                             new String(Encryptor.decrypt(nameBytesToDecrypt))) //Name
                     );
-                    Account.incrementNumberOfAccounts();
                 }
                 catch(NumberFormatException | IllegalBlockSizeException | BadPaddingException e){}
             }
@@ -138,7 +137,6 @@ public class ImportExport { //File Structure:
                         Integer.parseInt(f.getName().replaceAll("[^0-9]", "")), //ID
                         new String(Encryptor.decrypt(hashBytesToDecrypt))) //Name
                 );
-                Account.incrementNumberOfAccounts();
             }
             catch(NumberFormatException | IllegalBlockSizeException | BadPaddingException e){}
         }

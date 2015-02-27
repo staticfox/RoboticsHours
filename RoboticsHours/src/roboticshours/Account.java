@@ -1,5 +1,6 @@
 package roboticshours;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -11,7 +12,6 @@ import java.util.ArrayList;
  */
 public class Account {
 
-    private static int numberOfAccounts; //UNNECESSARY: TODO REMOVE
     private final int ID; //Primary key?
     private String name; //TODO FIRST AND LAST NAME. Possibly concatenate users' names into one string without spaces.
     private final ArrayList<Entry> entryList;
@@ -21,10 +21,9 @@ public class Account {
      * @param n the user's name
      */
     public Account(String n) { //Constructor A: Users should use this constructor.
-        ID = numberOfAccounts;
+        ID = new File("data").listFiles().length;
         name = n;
         entryList = new ArrayList<>();
-        numberOfAccounts++;
     }
 
     /**
@@ -36,7 +35,6 @@ public class Account {
         ID = i;
         name = n;
         entryList = new ArrayList<>();
-        numberOfAccounts++;
     }
 
     /**
@@ -87,13 +85,5 @@ public class Account {
      */
     public void clearEntries() {
         entryList.clear();
-    }
-    
-    /**
-     *  Increases the current counter for account IDs.
-     *  This will most likely be removed in a new version.
-     */
-    public static void incrementNumberOfAccounts(){
-        numberOfAccounts++;
     }
 }

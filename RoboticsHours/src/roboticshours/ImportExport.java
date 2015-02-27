@@ -100,7 +100,7 @@ public class ImportExport { //File Structure:
                 try{
                     Run.getAccountList().add(
                             new Account(
-                            Integer.valueOf(f.getName().replaceAll("[^0-9]", "")), //ID
+                            Integer.parseInt(f.getName().replaceAll("[^0-9]", "")), //ID
                             new String(Encryptor.decrypt(nameBytesToDecrypt))) //Name
                     );
                     Account.incrementNumberOfAccounts();
@@ -135,7 +135,7 @@ public class ImportExport { //File Structure:
             try{
                 Run.getAccountList().add(
                         new Account(
-                        Integer.valueOf(f.getName().replaceAll("[^0-9]", "")), //ID
+                        Integer.parseInt(f.getName().replaceAll("[^0-9]", "")), //ID
                         new String(Encryptor.decrypt(hashBytesToDecrypt))) //Name
                 );
                 Account.incrementNumberOfAccounts();
@@ -184,21 +184,21 @@ public class ImportExport { //File Structure:
         }
         //ID hours day1 month1 date1 hour1:minute1:second1 timeZone1 year1 day2 month2 date2 hour2:minute2:second2 timeZone2 year2
         for (String[] s : toEntry) {  //For each row array of data Strings in the toEntry table(2D array)
-            int id = Integer.valueOf(s[0]) - 1; //The ID of the account will be the first data value(ID) - 1 due to 0 base
-            Calendar date = new GregorianCalendar(Integer.valueOf(s[5]), //Create a new GregorianCalendar with year for field date in Entry
-                    Integer.valueOf(s[4]), //month -> int(!)
-                    Integer.valueOf(s[3]));//date
+            int id = Integer.parseInt(s[0]) - 1; //The ID of the account will be the first data value(ID) - 1 due to 0 base
+            Calendar date = new GregorianCalendar(Integer.parseInt(s[5]), //Create a new GregorianCalendar with year for field date in Entry
+                    Integer.parseInt(s[4]), //month -> int(!)
+                    Integer.parseInt(s[3]));//date
             date.setLenient(false); //probably unnecessary; but disallows Jan 32 -> Feb 1 conversion
 
-            Calendar dateCreated = new GregorianCalendar(Integer.valueOf(s[8]), //same as above, but for the field dateCreated in Entry
-                    Integer.valueOf(s[7]),
-                    Integer.valueOf(s[6]));
+            Calendar dateCreated = new GregorianCalendar(Integer.parseInt(s[8]), //same as above, but for the field dateCreated in Entry
+                    Integer.parseInt(s[7]),
+                    Integer.parseInt(s[6]));
             dateCreated.setLenient(false);
 
             Run.getAccountList().get(0) //Get account at given ID for each string[] representation of Entry in toEntry[][]
                     .addEntry(new Entry( //Add a new entry to the Account
                     Run.getAccountList().get(0), //with the account from the given ID
-                    Integer.valueOf(s[2]), //Hours -> parseInt
+                    Integer.parseInt(s[2]), //Hours -> parseInt
                     date, //GregorianCalendar date
                     dateCreated //GregorianCalendar dateCreated
                     )); //Constructor B for Entry

@@ -1,6 +1,5 @@
 package roboticshours;
 
-import com.sun.beans.editors.IntegerEditor;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -548,10 +547,6 @@ public class MainScreen extends JFrame implements TableModelListener{
         }
         entryTable.clearSelection();
     }//GEN-LAST:event_deleteButtonActionPerformed
-    
-    
-    
-    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton currentDate;

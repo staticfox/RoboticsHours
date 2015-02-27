@@ -375,28 +375,85 @@ public class MainScreen extends javax.swing.JFrame {
         else if(!datePattern.matcher(manualDateEntry.getText()).find()){ //TODO convert date
             JOptionPane.showMessageDialog(rootPane, "Please enter a date in the format MM/DD/YYYY.", "Error", JOptionPane.ERROR_MESSAGE);
             manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-            manualDateEntry.setText(null);
         }
         else{
             Calendar date = new GregorianCalendar();
-            String[] datePieces = manualDateEntry.getText().split("/");
-            date.set(Integer.parseInt(datePieces[2]), Integer.parseInt(datePieces[0]) - 1, Integer.parseInt(datePieces[1]));//TODO Add error checking
-            account.addEntry(new Entry(account, (int)hourSelector.getValue(), date));
-            Object[] data = new Object[4];
-                data[0] = false;
-                data[1] = (date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR)));
-                data[2] = (int)hourSelector.getValue();
-                data[3] = data[1];
-            dataModel.addRow(data);
-            //dataModel.fireTableDataChanged();
-            manualDateEntry.setBorder(defaultBorder);System.out.println("New entry added."); //TODO Auto update table
-            System.out.println("Last entry in the list:");
-            System.out.println(account.getEntries().get(account.getEntries().size() - 1));
-            System.out.println("Now exporting the file:");
-            ImportExport.exportAll();
-            manualDateEntry.setBorder(defaultBorder);
-            JOptionPane.showMessageDialog(rootPane, "Added successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
-            newBackButtonActionPerformed(evt);
+            boolean acceptable = true; //(acceptable)
+            String reason = ""; //Reason for rejection
+            final String DNE = "That date does not exist.";
+            String[] datePieces = manualDateEntry.getText().split("/"); //Split the date into 3 pieces.
+            if(datePieces[2].length() == 2){ //shorthand date form
+                datePieces[2] = ("" + date.get(Calendar.YEAR)).substring(0, 2) + datePieces[2]; //Getting the first two digits of the year. This method ensures working code after 2100
+            }
+            int[] dateNumbers = new int[3];
+            for(int i = 0; i < 3; i++){
+                dateNumbers[i] = Integer.valueOf(datePieces[i]); //Store the integer values
+                if(dateNumbers[i] < 0){ //If they have negative pieces
+                    acceptable = false; //UNACCEPTABLE
+                    reason = "You cannot have negative numbers in the date.";
+                }
+            }
+            if(Math.abs(dateNumbers[2] - date.get(Calendar.YEAR)) > 1){ //Dates that are < +- 1 year from the current date
+                acceptable = false; //UNACCEPTABLE
+                reason = "That date is out of the accepted range (1 year).";
+            }
+            if(dateNumbers[1] > 31){ //Months with more than 31 days
+               acceptable = false; //UNACCEPTABLE 
+               reason = DNE;
+            }
+            else if(dateNumbers[0] % 2 == 1 && dateNumbers[1] > 30){ //Short months with more than 30 days
+                acceptable = false; //UNACCEPTABLE
+                reason = DNE;
+            }
+            else if(dateNumbers[0] == 2 && dateNumbers[1] > 29){ //February with more than 29 days
+                acceptable = false; //UNACCEPTABLE
+                reason = DNE;
+            }
+            else if(dateNumbers[0] == 2 && dateNumbers[1] == 29){ //It's February 29. Leap year detection.
+                if(dateNumbers[2] % 4 != 0){ //Year is not divisible by 4; not a leap year
+                    acceptable = false; //UNACCEPTABLE
+                    reason = DNE;
+                }
+                else if(dateNumbers[2] % 100 != 0){ //Year is not divisible by 100 (every 100 years, the leap year is skipped)
+                    acceptable = true; //(acceptable)
+                }
+                else if(dateNumbers[2] % 400 != 0){ //Year is not divisible by 400 (Of course, the skipping gets skipped every 400 years)
+                    acceptable = false; //UNACCEPTABLE
+                    reason = DNE;
+                }
+                else{ //No reason to think it's not a leap year.
+                    acceptable = true; //(acceptable)
+                }
+            }
+            if(acceptable){
+                date.set(Integer.parseInt(datePieces[2]), Integer.parseInt(datePieces[0]) - 1, Integer.parseInt(datePieces[1]));
+                if(Calendar.getInstance().compareTo(date) < 0){ //Trying to enter dates in the future
+                    JOptionPane.showMessageDialog(rootPane, "You cannot enter dates in the future.", "Error", JOptionPane.ERROR_MESSAGE);
+                    manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+                }
+                else{
+                    account.addEntry(new Entry(account, (int)hourSelector.getValue(), date));
+                    Object[] data = new Object[4];
+                        data[0] = false;
+                        data[1] = (date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR)));
+                        data[2] = (int)hourSelector.getValue();
+                        data[3] = data[1];
+                    dataModel.addRow(data);
+                    //dataModel.fireTableDataChanged();
+                    manualDateEntry.setBorder(defaultBorder);System.out.println("New entry added."); //TODO Auto update table
+                    System.out.println("Last entry in the list:");
+                    System.out.println(account.getEntries().get(account.getEntries().size() - 1));
+                    System.out.println("Now exporting the file:");
+                    ImportExport.exportAll();
+                    manualDateEntry.setBorder(defaultBorder);
+                    JOptionPane.showMessageDialog(rootPane, "Added successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+                    newBackButtonActionPerformed(evt);
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, reason + "\nPlease enter a valid date.", "Error", JOptionPane.ERROR_MESSAGE);
+                manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            }
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 

@@ -148,7 +148,7 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
             }
         } //Now the Credential List is full of credentials. byte[]
         
-        byte[] username = usernameField.getText().getBytes();
+        byte[] username = usernameField.getText().replace(" ", "+").getBytes();
         byte[] password = Encryptor.charToByte(passwordField.getPassword()); //Get Credential's components from login screen's username/password fields.
         passwordField.setText(null); //Clearing the password field.
         
@@ -168,7 +168,7 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
         boolean admin = false; //This is a dangerous value.
         File file = null; //Selected file
         
-        if(/*Arrays.equals(credentials, adminCredentials) || */true){ //SO DANGEROUS
+        if(/*Arrays.equals(credentials, adminCredentials) || */false){ //SO DANGEROUS
             admin = true; //(!!!)
         }
         else{
@@ -199,7 +199,7 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
         }
         else{
             passwordField.setText("");
-            JOptionPane.showMessageDialog(rootPane, "Invalid Username or Password!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(rootPane, "Invalid Username or Password!\nUsername and Password are case-sensitive.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

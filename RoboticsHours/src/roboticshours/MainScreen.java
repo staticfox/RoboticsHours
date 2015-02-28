@@ -35,7 +35,7 @@ public class MainScreen extends JFrame implements TableModelListener{
         initComponents();
         defaultBorder = manualDateEntry.getBorder();
         account = a;
-        userName.setText(a.getAccountName());
+        userName.setText(a.getAccountName().split("[+]")[0]);
         ArrayList<Entry> entries = a.getEntries();
         Object[][] data = new Object[entries.size()][4];
         for(int i = 0; i < entries.size(); i++){
@@ -113,6 +113,7 @@ public class MainScreen extends JFrame implements TableModelListener{
         newBackButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
 
         mainPanel.setLayout(new java.awt.CardLayout());
 

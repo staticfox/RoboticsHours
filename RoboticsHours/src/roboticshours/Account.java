@@ -13,16 +13,19 @@ import java.util.ArrayList;
 public class Account {
 
     private final int ID; //Primary key?
-    private String name; //TODO FIRST AND LAST NAME. Possibly concatenate users' names into one string without spaces.
+    private final String firstName;
+    private final String lastName;
     private final ArrayList<Entry> entryList;
 
     /**
      * Creates a new account
-     * @param n the user's name
+     * @param n  the user's first name
+     * @param n2 the user's last name
      */
-    public Account(String n) { //Constructor A: Users should use this constructor.
+    public Account(String n, String n2) { //Constructor A: Users should use this constructor.
         ID = new File("data").listFiles().length;
-        name = n;
+        firstName = n;
+        lastName = n2;
         entryList = new ArrayList<>();
     }
 
@@ -31,9 +34,10 @@ public class Account {
      * @param i custom ID number
      * @param n the user's name
      */
-    public Account(int i, String n) { //Constructor B: This constructor should only be used by the program.
+    public Account(int i, String n, String n2) { //Constructor B: This constructor should only be used by the program.
         ID = i;
-        name = n;
+        firstName = n;
+        lastName = n2;
         entryList = new ArrayList<>();
     }
 
@@ -41,15 +45,15 @@ public class Account {
      * @return  the user's name
      */
     public String getAccountName() {
-        return name;
+        return firstName + "+" + lastName;
     }
 
-    /**
+    /*/**
      * @param n the new account name
-     */
+     *
     public void changeAccountName(String n) {
-        name = n;
-    }
+        firstName = n;
+    }*/ //Unused.
 
     /**
      * @return  the account ID

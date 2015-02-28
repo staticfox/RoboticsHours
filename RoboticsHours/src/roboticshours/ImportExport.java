@@ -154,10 +154,10 @@ public class ImportExport { //File Structure:
                 }
                 
                 try{
-                    Run.getAccountList().add(
-                            new Account(
+                    Run.getAccountList().add(new Account(
                             Integer.parseInt(f.getName().replaceAll("[^0-9]", "")), //ID
-                            new String(Encryptor.decrypt(nameBytesToDecrypt))) //Name
+                            new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[0], 
+                            new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[1]) //Name
                     );
                 }
                 catch(NumberFormatException | IllegalBlockSizeException | BadPaddingException e){}
@@ -238,16 +238,16 @@ public class ImportExport { //File Structure:
             
             String arrayRepresentation = br.readLine();
             String[] byteStrings = arrayRepresentation.substring(1, arrayRepresentation.length() - 1).split(", ");
-            byte[] hashBytesToDecrypt = new byte[byteStrings.length];
-            for(int i = 0; i < hashBytesToDecrypt.length; i++){
-                hashBytesToDecrypt[i] = (byte)Integer.parseInt(byteStrings[i]);
+            byte[] nameBytesToDecrypt = new byte[byteStrings.length];
+            for(int i = 0; i < nameBytesToDecrypt.length; i++){
+                nameBytesToDecrypt[i] = (byte)Integer.parseInt(byteStrings[i]);
             }
             
             try{
-                Run.getAccountList().add(
-                        new Account(
+                Run.getAccountList().add(new Account(
                         Integer.parseInt(f.getName().replaceAll("[^0-9]", "")), //ID
-                        new String(Encryptor.decrypt(hashBytesToDecrypt))) //Name
+                        new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[0], 
+                        new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[1]) //Name
                 );
             }
             catch(NumberFormatException | IllegalBlockSizeException | BadPaddingException e){}

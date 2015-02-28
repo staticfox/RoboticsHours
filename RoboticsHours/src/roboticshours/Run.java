@@ -25,9 +25,9 @@ public class Run {
      *  This is in order to TEST the encryption, export, and import functions.
      */
     public static void save() {
-        roboticshours.Encryptor.makeKey(Encryptor.hash("AliceBob".getBytes(), 1024)); //Makes a key from credentials; will eventially be accomplished using user input.
+        roboticshours.Encryptor.makeKey(Encryptor.hash("Alan+HuangCheese*97".getBytes(), 1024)); //Makes a key from credentials; will eventially be accomplished using user input.
 
-        Account test = new Account(1, "Alice"); //Creates new Account: ID 1, name Saito
+        Account test = new Account(1, "Alan", "Huang"); //Creates new Account: ID 1, name Saito
         accountList.add(test); //adds Account test to accountList
         test.addEntry(new Entry(test, 6, new GregorianCalendar())); //Adds new entry with current date/time to Account test
 
@@ -35,9 +35,9 @@ public class Run {
 
         ImportExport.exportSingleFile(accountList.get(0));
 
-        Encryptor.makeKey(Encryptor.hash("BobAndTheThirdParty".getBytes(), 1024));
+        Encryptor.makeKey(Encryptor.hash("Hikari+SaitoRockman.EXE".getBytes(), 1024));
 
-        Account test2 = new Account(2, "Bob");
+        Account test2 = new Account(2, "Hikari", "Saito");
         accountList.add(test2);
 
         test2.addEntry(new Entry(test2, 60, new GregorianCalendar()));

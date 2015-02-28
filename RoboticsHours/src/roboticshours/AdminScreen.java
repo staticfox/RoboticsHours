@@ -1,12 +1,10 @@
 package roboticshours;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -254,8 +252,19 @@ public class AdminScreen extends JFrame implements TableModelListener{
     
     @Override
     public void tableChanged(TableModelEvent e){
-        if(e.getColumn() == 1){
-            String newDate = (String) dataModel.getValueAt(e.getFirstRow(), 1);
+        String name = (String) dataModel.getValueAt(e.getFirstRow(), 1);
+        int offset = 0;
+        for(Account a : Run.getAccountList()){
+            if(name.equals(a.getAccountName())){
+                account = a;
+                break;
+            }
+            else{
+                offset += a.getEntries().size();
+            }
+        }
+        if(e.getColumn() == 2){
+            String newDate = (String) dataModel.getValueAt(e.getFirstRow(), 2);
             if(parseDate(newDate)){
                 Calendar date = new GregorianCalendar();
                 String[] datePieces = newDate.split("/"); //Split the date into 3 pieces.
@@ -264,24 +273,25 @@ public class AdminScreen extends JFrame implements TableModelListener{
                 }
 
                 date.set(Integer.parseInt(datePieces[2]), Integer.parseInt(datePieces[0]) - 1, Integer.parseInt(datePieces[1]));
-                account.getEntries().get(e.getFirstRow()).setDate(date);
+                account.getEntries().get(e.getFirstRow() - offset).setDate(date);
+                
                 dataModel.removeTableModelListener(this); //avoiding recursive fireTableStateChanged by deregistering the listener before editing cell value
-                dataModel.setValueAt((date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR))), e.getFirstRow(), 1);
+                dataModel.setValueAt((date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR))), e.getFirstRow(), 2);
                 dataModel.addTableModelListener(this); //Strangely, none of the other setValueAt calls seem to have this issue.
             }
             else{
-                Calendar oldDate = account.getEntries().get(e.getFirstRow()).getDate();
-                dataModel.setValueAt((oldDate.get(Calendar.MONTH) + 1 + "/" + oldDate.get(Calendar.DAY_OF_MONTH) + "/" + (oldDate.get(Calendar.YEAR))), e.getFirstRow(), 1);
+                Calendar oldDate = account.getEntries().get(e.getFirstRow() - offset).getDate();
+                dataModel.setValueAt((oldDate.get(Calendar.MONTH) + 1 + "/" + oldDate.get(Calendar.DAY_OF_MONTH) + "/" + (oldDate.get(Calendar.YEAR))), e.getFirstRow(), 2);
             }
         }
-        else if (e.getColumn() == 2){
-            int hours = (int) dataModel.getValueAt(e.getFirstRow(), 2);
+        else if (e.getColumn() == 3){
+            int hours = (int) dataModel.getValueAt(e.getFirstRow(), 3);
             if(hours > 0 && hours < 13){
-                account.getEntries().get(e.getFirstRow()).setHours(hours);
+                account.getEntries().get(e.getFirstRow() - offset).setHours(hours);
             }
             else{
                 JOptionPane.showMessageDialog(rootPane, "Hour value is not in accepted range (1 - 12)", "Error", JOptionPane.ERROR_MESSAGE);
-                dataModel.setValueAt(account.getEntries().get(e.getFirstRow()).getHours(), e.getFirstRow(), 2);//TODO fix
+                dataModel.setValueAt(account.getEntries().get(e.getFirstRow() - offset).getHours(), e.getFirstRow(), 3);//TODO fix
             }
         }
     }

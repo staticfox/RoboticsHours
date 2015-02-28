@@ -162,15 +162,27 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
         Arrays.fill(credentials, (byte)0); //Clear credentials
         
         boolean validCredentials = false; //Prep for authentication
+        boolean admin = false; //This is a dangerous value.
         File file = null; //Selected file
         
-        for(byte[] b : authList){
-            if(Arrays.equals(b, hashedCredentials)){ //If the selected byte[] from authList matches the byte[] hashedcredentials...
-                validCredentials = true; //Yay, valid login
-                file = fileList[authList.indexOf(b)]; //Sets file equal to file at the index of the matching credential from credentialList
+        if(/*Arrays.equals(credentials, adminCredentials) || */true){ //SO DANGEROUS
+            admin = true; //(!!!)
+        }
+        else{
+            for(byte[] b : authList){
+                if(Arrays.equals(b, hashedCredentials)){ //If the selected byte[] from authList matches the byte[] hashedcredentials...
+                    validCredentials = true; //Yay, valid login
+                    file = fileList[authList.indexOf(b)]; //Sets file equal to file at the index of the matching credential from credentialList
+                }
             }
         }
-        
+        if(admin){
+            ImportExport.importAll();
+            Run.hideLoginScreen();
+            java.awt.EventQueue.invokeLater(() -> {
+                new AdminScreen().setVisible(true);
+            });
+        }
         if(validCredentials){ //IF valid login
             Encryptor.makeKey(hashedCredentials);
             ImportExport.importSingleFile(file);
@@ -178,7 +190,9 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
             System.out.println(Run.getAccountList().get(0).getEntries());
             System.out.println("~~~~");
             Run.hideLoginScreen();
-            new MainScreen(Run.getAccountList().get(0)).setVisible(true);
+            java.awt.EventQueue.invokeLater(() -> {
+                new MainScreen(Run.getAccountList().get(0)).setVisible(true);
+            });
         }
         else{
             passwordField.setText("");

@@ -60,9 +60,12 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
 
         usernameField = new JTextField();
 
-        passwordField = new JPasswordField();
+        passwordField = new JPasswordField(){
+            @Override
+            public void paste(){}
+        };
         passwordField.addKeyListener(this); //KeyListener allows VK_ENTER to "press" the login button
-
+        
         loginButton = new JButton();
         loginButton.setText("Login");
         loginButton.addActionListener(new ActionListener() {

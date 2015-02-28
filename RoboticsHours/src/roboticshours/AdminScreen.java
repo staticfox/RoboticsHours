@@ -93,12 +93,29 @@ public class AdminScreen extends JFrame implements TableModelListener{
         entryTable = new javax.swing.JTable();
         tableBackButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
+        newEntryPanel = new javax.swing.JPanel();
+        nameLabel = new javax.swing.JLabel();
+        hourLabel = new javax.swing.JLabel();
+        dateLabel = new javax.swing.JLabel();
+        submitButton = new javax.swing.JButton();
+        newBackButton = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jPasswordField1 = new javax.swing.JPasswordField(){
+            public void paste(){}
+        };
+        jPasswordField2 = new javax.swing.JPasswordField(){
+            public void paste(){}
+        };
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(338, 180));
 
         mainPanel.setLayout(new java.awt.CardLayout());
 
-        newButton.setText("Enter Hours");
+        startPanel.setPreferredSize(new java.awt.Dimension(338, 180));
+
+        newButton.setActionCommand("Add New Account");
+        newButton.setLabel("Add New Account");
         newButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newButtonActionPerformed(evt);
@@ -142,6 +159,8 @@ public class AdminScreen extends JFrame implements TableModelListener{
         );
 
         mainPanel.add(startPanel, "startPanel");
+
+        viewEditPanel.setPreferredSize(new java.awt.Dimension(338, 180));
 
         entryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -217,6 +236,84 @@ public class AdminScreen extends JFrame implements TableModelListener{
         );
 
         mainPanel.add(viewEditPanel, "viewEditPanel");
+
+        newEntryPanel.setPreferredSize(new java.awt.Dimension(338, 180));
+
+        nameLabel.setText("Full Name:");
+
+        hourLabel.setText("Password:");
+
+        dateLabel.setText("Confirm Password:");
+
+        submitButton.setText("Submit");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
+
+        newBackButton.setText("Back");
+        newBackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newBackButtonActionPerformed(evt);
+            }
+        });
+
+        jTextField1.setText("jTextField1");
+
+        jPasswordField1.setText("jPasswordField1");
+
+        jPasswordField2.setText("jPasswordField2");
+
+        javax.swing.GroupLayout newEntryPanelLayout = new javax.swing.GroupLayout(newEntryPanel);
+        newEntryPanel.setLayout(newEntryPanelLayout);
+        newEntryPanelLayout.setHorizontalGroup(
+            newEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newEntryPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(newEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newEntryPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(dateLabel)
+                        .addGap(117, 117, 117)
+                        .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(newEntryPanelLayout.createSequentialGroup()
+                        .addComponent(hourLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(newEntryPanelLayout.createSequentialGroup()
+                        .addComponent(newBackButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(submitButton))
+                    .addGroup(newEntryPanelLayout.createSequentialGroup()
+                        .addComponent(nameLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        newEntryPanelLayout.setVerticalGroup(
+            newEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newEntryPanelLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(newEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nameLabel)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(newEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(hourLabel)
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(newEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(dateLabel)
+                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(newEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(newBackButton)
+                    .addComponent(submitButton))
+                .addContainerGap())
+        );
+
+        mainPanel.add(newEntryPanel, "newEntryPanel");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -396,15 +493,63 @@ public class AdminScreen extends JFrame implements TableModelListener{
         }
         entryTable.clearSelection();
     }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        /*if(parseDate(manualDateEntry.getText())){
+            Calendar date = new GregorianCalendar();
+            String[] datePieces = manualDateEntry.getText().split("/"); //Split the date into 3 pieces.
+            Object[] data = new Object[4];
+            data[3] = (date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR)));
+
+            if(datePieces[2].length() == 2){ //shorthand date form
+                datePieces[2] = ("" + date.get(Calendar.YEAR)).substring(0, 2) + datePieces[2]; //Getting the first two digits of the year. This method ensures working code after 2100
+            }
+
+            date.set(Integer.parseInt(datePieces[2]), Integer.parseInt(datePieces[0]) - 1, Integer.parseInt(datePieces[1]));
+
+            account.addEntry(new Entry(account, (int)hourSelector.getValue(), date));
+
+            data[0] = false;
+            data[1] = (date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR)));
+            data[2] = (int)hourSelector.getValue();
+            dataModel.addRow(data);
+
+            System.out.println("New entry added."); //TODO Auto update table
+            System.out.println("Last entry in the list:");
+            System.out.println(account.getEntries().get(account.getEntries().size() - 1));
+            System.out.println("Now exporting the file:");
+            ImportExport.exportAll();
+
+            manualDateEntry.setBorder(defaultBorder);
+            JOptionPane.showMessageDialog(rootPane, "Added successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
+            newBackButtonActionPerformed(evt);
+        }
+        else{
+            manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        }*/
+    }//GEN-LAST:event_submitButtonActionPerformed
+
+    private void newBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBackButtonActionPerformed
+        ((CardLayout)(mainPanel.getLayout())).show(mainPanel, "startPanel");
+    }//GEN-LAST:event_newBackButtonActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel dateLabel;
     private javax.swing.JButton deleteButton;
     private javax.swing.JTable entryTable;
     private javax.swing.JScrollPane entryTableHeader;
     private javax.swing.JLabel greetingLabel;
+    private javax.swing.JLabel hourLabel;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JPasswordField jPasswordField2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JLabel nameLabel;
+    private javax.swing.JButton newBackButton;
     private javax.swing.JButton newButton;
+    private javax.swing.JPanel newEntryPanel;
     private javax.swing.JPanel startPanel;
+    private javax.swing.JButton submitButton;
     private javax.swing.JButton tableBackButton;
     private javax.swing.JButton viewButton;
     private javax.swing.JPanel viewEditPanel;

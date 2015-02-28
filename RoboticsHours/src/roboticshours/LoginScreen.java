@@ -183,7 +183,7 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
                 new AdminScreen().setVisible(true);
             });
         }
-        if(validCredentials){ //IF valid login
+        else if(validCredentials){ //IF valid login
             Encryptor.makeKey(hashedCredentials);
             ImportExport.importSingleFile(file);
             System.out.println("Valid login detected. Entries imported.");

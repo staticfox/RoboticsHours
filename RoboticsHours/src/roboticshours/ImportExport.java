@@ -144,6 +144,8 @@ public class ImportExport { //File Structure:
                 
                 Encryptor.makeKey(input);
                 
+                Arrays.fill(input, (byte)0);
+                
                 String arrayRepresentation = br.readLine();
                 String[] byteStrings = arrayRepresentation.substring(1, arrayRepresentation.length() - 1).split(", ");
                 byte[] nameBytesToDecrypt = new byte[byteStrings.length];
@@ -164,7 +166,7 @@ public class ImportExport { //File Structure:
             catch (IOException e) {
                 System.out.println("ReadLine for Account Creation in importData failed: " + e);
             }
-            readDataSingle(f); //for each file, read the data and store in the account created above's entryList
+            readData(f); //for each file, read the data and store in the account created above's entryList
         }
     }
     
@@ -172,11 +174,67 @@ public class ImportExport { //File Structure:
      *
      * @param f
      */
-    public static void importSingleFile(File f){
+    public static void importSingleFile(File f){ //TODO Test the single method
+        
+        byte[] input = new byte[32]; //Because this method deals with ALL the keys from ALL the files, storing the input in an immutable String is a BAD IDEA, even if it would make programming easier.
+        int[] bytes = new int[4];
+        int store = 0;
+        
+        int inputCounter = 0;
+        int bytePositionCounter = 0;
         
         try(BufferedReader br = new BufferedReader(new FileReader(f))){
-                
-            br.readLine();//TODO make same changes here
+            while(true){
+                int i = br.read();
+                System.out.println(i);
+                if(i == 44 || i == 93){ //comma value separator or end bracket ]
+                    switch(bytePositionCounter){
+                        case 4:
+                            store = ((100 + 10 * bytes[2] + bytes[3]) * -1);
+                            break;
+                        case 3:
+                            if(bytes[0] == -3){
+                                store = ((10 * bytes[1] + bytes[2]) * -1);
+                            }
+                            else{
+                                store = (100 + 10 * bytes[1] + bytes[2]);
+                            }
+                            break;
+                        case 2:
+                            if(bytes[0] == -3){
+                                store = (bytes[1] * -1);
+                            }
+                            else{
+                                store = (10 * bytes[0] + bytes[1]);
+                            }
+                            break;
+                        case 1:
+                            store = bytes[1];
+                            break;
+                    }
+                    System.out.println("Char complete: " + store);
+                    input[inputCounter] = (byte) store;
+                    inputCounter++;
+                    if(i == 44) br.read(); //dispose of space
+                    bytePositionCounter = 0;
+                    Arrays.fill(bytes, 0);
+                }
+                else if(i == 13){ //carriage return
+                    br.read();
+                    break;
+                }
+                else if(i == 91); // [ or ]; discard
+                else{
+                    bytes[bytePositionCounter] = i - 48;
+                    bytePositionCounter++;
+                }
+            }
+
+            inputCounter = 0;
+
+            Encryptor.makeKey(input);
+            
+            Arrays.fill(input, (byte)0);
             
             String arrayRepresentation = br.readLine();
             String[] byteStrings = arrayRepresentation.substring(1, arrayRepresentation.length() - 1).split(", ");
@@ -199,6 +257,59 @@ public class ImportExport { //File Structure:
             System.out.println("ReadLine for Account Creation in importData failed: " + e);
         }
         readDataSingle(f); //for each file, read the data and store in the account created above's entryList 
+    }
+    
+    public static void readData(File f){ //Takes a file f, reads the entries, puts them into the entryLists of Accounts.
+        
+        String[] byteString;
+        byte[] toDecrypt;
+        final ArrayList<String> stringsIn = new ArrayList<>();
+        
+        String line;
+        try(BufferedReader br = new BufferedReader(new FileReader(f))){
+            br.readLine(); //Discarding hashed key
+            br.readLine(); //Discarding encrypted name
+            while ((line = br.readLine()) != null) {
+                byteString = line.substring(1, line.length() - 1).split(", "); //While the read line stored in Line != null, add it to the linesIn<String> ArrayList.
+                toDecrypt = new byte[byteString.length];
+                for(int i = 0; i < byteString.length; i++){
+                    toDecrypt[i] = (byte)Integer.parseInt(byteString[i]);
+                    
+                }
+                stringsIn.add(new String(Encryptor.decrypt(toDecrypt)));
+            }
+        }
+        catch (IOException | IllegalBlockSizeException | BadPaddingException e) {
+            System.out.println("readData IO Exception: " + e);
+        }
+
+        String[][] toEntry = new String[stringsIn.size()][20]; //2D Array toEntry is a new String Array with linesIn.size() rows and 18 (number of data entries per Entry.toString) columns.
+
+        for (int i = 0; i < stringsIn.size(); i++) { //For each line in LinesIn,
+            toEntry[i] = stringsIn.get(i).split("[: ]"); // each row in toEntry = linesIn.get line i and regex split it at NOT number/letter (spaces, colon)
+        }
+        //ID hours day1 month1 date1 hour1:minute1:second1 timeZone1 year1 day2 month2 date2 hour2:minute2:second2 timeZone2 year2
+        for (String[] s : toEntry) {  //For each row array of data Strings in the toEntry table(2D array)
+            int id = Integer.parseInt(s[0]) - 1; //The ID of the account will be the first data value(ID) - 1 due to 0 base
+            Calendar date = new GregorianCalendar(Integer.parseInt(s[5]), //Create a new GregorianCalendar with year for field date in Entry
+                    Integer.parseInt(s[4]), //month -> int(!)
+                    Integer.parseInt(s[3]));//date
+            date.setLenient(false); //probably unnecessary; but disallows Jan 32 -> Feb 1 conversion
+
+            Calendar dateCreated = new GregorianCalendar(Integer.parseInt(s[8]), //same as above, but for the field dateCreated in Entry
+                    Integer.parseInt(s[7]),
+                    Integer.parseInt(s[6]));
+            dateCreated.setLenient(false);
+
+            Run.getAccountList().get(id) //Get account at given ID for each string[] representation of Entry in toEntry[][]
+                    .addEntry(new Entry( //Add a new entry to the Account
+                    Run.getAccountList().get(id), //with the account from the given ID
+                    Integer.parseInt(s[2]), //Hours -> parseInt
+                    date, //GregorianCalendar date
+                    dateCreated //GregorianCalendar dateCreated
+                    )); //Constructor B for Entry
+        }
+        stringsIn.clear();
     }
     
     /**

@@ -119,7 +119,7 @@ public class ImportExport { //File Structure:
                                 }
                                 break;
                             case 1:
-                                store = bytes[1];
+                                store = bytes[0];
                                 break;
                         }
                         System.out.println("Char complete: " + store);
@@ -209,7 +209,7 @@ public class ImportExport { //File Structure:
                             }
                             break;
                         case 1:
-                            store = bytes[1];
+                            store = bytes[0];
                             break;
                     }
                     System.out.println("Char complete: " + store);

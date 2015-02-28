@@ -86,9 +86,63 @@ public class ImportExport { //File Structure:
      */
     public static void importAll(){ //TODO: Change array positions in code due to addition of name field to Entry.toString();
         
+        byte[] input = new byte[32]; //Because this method deals with ALL the keys from ALL the files, storing the input in an immutable String is a BAD IDEA, even if it would make programming easier.
+        int[] bytes = new int[4];
+        int store = 0;
+        
+        int inputCounter = 0;
+        int bytePositionCounter = 0;
         for (File f : new File("data").listFiles()) { //For each File in /data/
             try(BufferedReader br = new BufferedReader(new FileReader(f))){
-                br.readLine();  //Discarding the hashed key TODO Make this actually make a keyspec orz
+                while(true){
+                    int i = br.read();
+                    System.out.println(i);
+                    if(i == 44 || i == 93){ //comma value separator or end bracket ]
+                        switch(bytePositionCounter){
+                            case 4:
+                                store = ((100 + 10 * bytes[2] + bytes[3]) * -1);
+                                break;
+                            case 3:
+                                if(bytes[0] == -3){
+                                    store = ((10 * bytes[1] + bytes[2]) * -1);
+                                }
+                                else{
+                                    store = (100 + 10 * bytes[1] + bytes[2]);
+                                }
+                                break;
+                            case 2:
+                                if(bytes[0] == -3){
+                                    store = (bytes[1] * -1);
+                                }
+                                else{
+                                    store = (10 * bytes[0] + bytes[1]);
+                                }
+                                break;
+                            case 1:
+                                store = bytes[1];
+                                break;
+                        }
+                        System.out.println("Char complete: " + store);
+                        input[inputCounter] = (byte) store;
+                        inputCounter++;
+                        if(i == 44) br.read(); //dispose of space
+                        bytePositionCounter = 0;
+                        Arrays.fill(bytes, 0);
+                    }
+                    else if(i == 13){ //carriage return
+                        br.read();
+                        break;
+                    }
+                    else if(i == 91); // [ or ]; discard
+                    else{
+                        bytes[bytePositionCounter] = i - 48;
+                        bytePositionCounter++;
+                    }
+                }
+                
+                inputCounter = 0;
+                
+                Encryptor.makeKey(input);
                 
                 String arrayRepresentation = br.readLine();
                 String[] byteStrings = arrayRepresentation.substring(1, arrayRepresentation.length() - 1).split(", ");
@@ -110,8 +164,8 @@ public class ImportExport { //File Structure:
             catch (IOException e) {
                 System.out.println("ReadLine for Account Creation in importData failed: " + e);
             }
-            readData(f); //for each file, read the data and store in the account created above's entryList
-        } 
+            readDataSingle(f); //for each file, read the data and store in the account created above's entryList
+        }
     }
     
     /**
@@ -122,7 +176,7 @@ public class ImportExport { //File Structure:
         
         try(BufferedReader br = new BufferedReader(new FileReader(f))){
                 
-            br.readLine();
+            br.readLine();//TODO make same changes here
             
             String arrayRepresentation = br.readLine();
             String[] byteStrings = arrayRepresentation.substring(1, arrayRepresentation.length() - 1).split(", ");
@@ -144,14 +198,14 @@ public class ImportExport { //File Structure:
         catch (IOException e) {
             System.out.println("ReadLine for Account Creation in importData failed: " + e);
         }
-        readData(f); //for each file, read the data and store in the account created above's entryList 
+        readDataSingle(f); //for each file, read the data and store in the account created above's entryList 
     }
     
     /**
      *
      * @param f
      */
-    public static void readData(File f){ //Takes a file f, reads the entries, puts them into the entryLists of Accounts.
+    public static void readDataSingle(File f){ //Takes a file f, reads the entries, puts them into the entryLists of Accounts.
         
         String[] byteString;
         byte[] toDecrypt;
@@ -201,13 +255,6 @@ public class ImportExport { //File Structure:
                     dateCreated //GregorianCalendar dateCreated
                     )); //Constructor B for Entry
         }
-        
-        /*for(Account a : accountList){
-         for(Entry e : a.getEntries()){
-         System.out.println(e.toString());
-         } //Debug, testing printing of entries from each account in accountList
-         }*/
-
         stringsIn.clear();
-    } //readData(File f)
+    }
 }

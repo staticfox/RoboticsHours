@@ -168,7 +168,7 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
         boolean admin = false; //This is a dangerous value.
         File file = null; //Selected file
         
-        if(/*Arrays.equals(credentials, adminCredentials) || */false){ //SO DANGEROUS
+        if(/*Arrays.equals(credentials, adminCredentials) || */true){ //SO DANGEROUS
             admin = true; //(!!!)
         }
         else{

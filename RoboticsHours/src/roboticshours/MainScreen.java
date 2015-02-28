@@ -528,18 +528,18 @@ public class MainScreen extends JFrame implements TableModelListener{
         boolean delete = false, itemsToDelete = false;
         String message = "Are you sure you want to delete the selected entries?\nThis cannot be undone!";
         
-        for(int i = dataModel.getRowCount(); i > 0; i--){
-            if((boolean)dataModel.getValueAt(i - 1, 0)){
+        for(int i = dataModel.getRowCount() - 1; i > -1; i--){
+            if((boolean)dataModel.getValueAt(i, 0)){
                 if(!itemsToDelete){
                     delete = (JOptionPane.showConfirmDialog(rootPane, message, "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) == 0;
                     itemsToDelete = true;
                 }
                 if(delete){
-                    account.getEntries().remove(i - 1);
-                    dataModel.removeRow(i - 1);
+                    account.getEntries().remove(i);
+                    dataModel.removeRow(i);
                 }
                 else{
-                    dataModel.setValueAt(false, i - 1, 0);
+                    dataModel.setValueAt(false, i, 0);
                 }
             }
         }

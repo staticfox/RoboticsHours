@@ -16,6 +16,7 @@ public class Account {
     private final String firstName;
     private final String lastName;
     private final ArrayList<Entry> entryList;
+    private byte[] hashedCredentials;
 
     /**
      * Creates a new account
@@ -27,18 +28,48 @@ public class Account {
         firstName = n;
         lastName = n2;
         entryList = new ArrayList<>();
+        hashedCredentials = null;
+    }
+    
+    /**
+     * Creates a new account
+     * @param n  the user's first name
+     * @param n2 the user's last name
+     */
+    public Account(String n, String n2, byte[] b) { //Constructor A: Users should use this constructor.
+        ID = ImportExport.getNextID();
+        firstName = n;
+        lastName = n2;
+        entryList = new ArrayList<>();
+        hashedCredentials = b;
     }
 
     /**
      * Creates a new account and specifies the ID number to be used
-     * @param i custom ID number
-     * @param n the user's name
+     * @param i     custom ID number
+     * @param n     the user's name
+     * @param n2    the user's last name
      */
     public Account(int i, String n, String n2) { //Constructor B: This constructor should only be used by the program.
         ID = i;
         firstName = n;
         lastName = n2;
         entryList = new ArrayList<>();
+        hashedCredentials = null;
+    }
+    
+    /**
+     * Creates a new account and specifies the ID number to be used
+     * @param i     custom ID number
+     * @param n     the user's name
+     * @param n2    the user's last name
+     */
+    public Account(int i, String n, String n2, byte[] b) { //Constructor B: This constructor should only be used by the program.
+        ID = i;
+        firstName = n;
+        lastName = n2;
+        entryList = new ArrayList<>();
+        hashedCredentials = b;
     }
 
     /**
@@ -60,6 +91,14 @@ public class Account {
      */
     public int getAccountID() {
         return ID;
+    }
+    
+    public void setHashedCredentials(byte[] b){
+        hashedCredentials = b;
+    }
+    
+    public byte[] getHashedCredentials(){
+        return hashedCredentials;
     }
 
     /**

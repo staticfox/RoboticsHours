@@ -583,7 +583,20 @@ public class AdminScreen extends JFrame implements TableModelListener{
             passwordConfirmField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         }
         else{
-            Run.addNewAccount(new Account(firstNameField.getText(), lastNameField.getText()));
+            byte[] username = (firstNameField.getText() + "+" + lastNameField.getText()).replace(" ", "+").getBytes();
+            byte[] password = Encryptor.charToByte(passwordField.getPassword()); //Get Credential's components from login screen's username/password fields.
+            passwordField.setText(null); //Clearing the password field.
+
+            byte[] credentials = new byte[username.length + password.length]; //Creating a combined credential array that is the length of username + password
+            System.arraycopy(username, 0, credentials, 0, username.length); //Copying from username at 0 to credentials at 0 for all bytes in username.
+            System.arraycopy(password, 0, credentials, username.length, password.length); //Copying from password at 0 to credentials at end of username for all bytes in password.
+            
+            Arrays.fill(username, (byte)0); //Clear username
+            Arrays.fill(password, (byte)0); //Clear password
+
+            byte[] hashedCredentials = Encryptor.hash(credentials, 1024); //Hashes the byte representation of credentials using static salt and 1024 iterations.
+            Run.addNewAccount(new Account(firstNameField.getText(), lastNameField.getText(), Encryptor.hash(credentials, 1024)));
+            Arrays.fill(credentials, (byte)0); //Clear credentials
             JOptionPane.showMessageDialog(rootPane, "New account created successfully!\nYour username for login is: " + firstNameField.getText() + " " + lastNameField.getText(), "Success!", JOptionPane.INFORMATION_MESSAGE);
             newBackButtonActionPerformed(null);
         }

@@ -63,7 +63,7 @@ public class ImportExport { //File Structure:
             Files.createFile(FileSystems.getDefault().getPath("data", f.getName()));
             try(PrintWriter out = new PrintWriter(f)){
                 
-                out.println(Arrays.toString(Encryptor.getKey()));
+                out.println(Arrays.toString(a.getHashedCredentials()));
                 
                 out.println(Arrays.toString(Encryptor.encrypt(a.getAccountName().getBytes())));
                 
@@ -158,7 +158,9 @@ public class ImportExport { //File Structure:
                     Run.addAccount(new Account(
                             Integer.parseInt(f.getName().replaceAll("[^0-9]", "")), //ID
                             new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[0], 
-                            new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[1]) //Name
+                            new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[1],
+                            input), //Name
+                            Integer.parseInt(f.getName().replaceAll("[^0-9]", ""))
                     );
                 }
                 catch(NumberFormatException | IllegalBlockSizeException | BadPaddingException e){}
@@ -248,7 +250,8 @@ public class ImportExport { //File Structure:
                 Run.getAccountList().add(new Account(
                         Integer.parseInt(f.getName().replaceAll("[^0-9]", "")), //ID
                         new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[0], 
-                        new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[1]) //Name
+                        new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[1],
+                        input) //Name
                 );
             }
             catch(NumberFormatException | IllegalBlockSizeException | BadPaddingException e){}

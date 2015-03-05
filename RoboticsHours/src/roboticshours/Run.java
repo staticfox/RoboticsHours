@@ -19,6 +19,15 @@ public class Run {
     public static ArrayList<Account> getAccountList() { //returns list of accounts for Import/Export
         return accountList;
     }
+    
+    public static void addAccount(Account a){
+        accountList.add(a);
+    }
+    
+    public static void addNewAccount(Account a){
+        accountList.add(a);
+        ImportExport.exportSingleFile(a);
+    }
 
     /**
      *  Exports accounts, clears accountList, and re-imports the files.

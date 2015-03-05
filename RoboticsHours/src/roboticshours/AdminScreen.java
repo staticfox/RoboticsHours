@@ -524,6 +524,11 @@ public class AdminScreen extends JFrame implements TableModelListener{
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        firstNameField.setBorder(defaultBorder);
+        lastNameField.setBorder(defaultBorder);
+        passwordField.setBorder(defaultBorder);
+        passwordConfirmField.setBorder(defaultBorder);
+        
         if(firstNameField.getText().equals("")){
             firstNameField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         }
@@ -536,40 +541,52 @@ public class AdminScreen extends JFrame implements TableModelListener{
         if(Arrays.equals(passwordConfirmField.getPassword(), new char[0])){
             passwordConfirmField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         }
-        
-        
-        /*if(parseDate(manualDateEntry.getText())){
-            Calendar date = new GregorianCalendar();
-            String[] datePieces = manualDateEntry.getText().split("/"); //Split the date into 3 pieces.
-            Object[] data = new Object[4];
-            data[3] = (date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR)));
-
-            if(datePieces[2].length() == 2){ //shorthand date form
-                datePieces[2] = ("" + date.get(Calendar.YEAR)).substring(0, 2) + datePieces[2]; //Getting the first two digits of the year. This method ensures working code after 2100
-            }
-
-            date.set(Integer.parseInt(datePieces[2]), Integer.parseInt(datePieces[0]) - 1, Integer.parseInt(datePieces[1]));
-
-            account.addEntry(new Entry(account, (int)hourSelector.getValue(), date));
-
-            data[0] = false;
-            data[1] = (date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR)));
-            data[2] = (int)hourSelector.getValue();
-            dataModel.addRow(data);
-
-            System.out.println("New entry added."); //TODO Auto update table
-            System.out.println("Last entry in the list:");
-            System.out.println(account.getEntries().get(account.getEntries().size() - 1));
-            System.out.println("Now exporting the file:");
-            ImportExport.exportAll();
-
-            manualDateEntry.setBorder(defaultBorder);
-            JOptionPane.showMessageDialog(rootPane, "Added successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
-            newBackButtonActionPerformed(evt);
+        Pattern nonAlpha = Pattern.compile("[^A-Za-z]");
+        boolean nameViolation = false;
+        String message = null;
+        if(firstNameField.getText().equals("")){
+            nameViolation = true;
+            message = "Please enter a name.";
+            firstNameField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));   
+        }
+        if(lastNameField.getText().equals("")){
+            nameViolation = true;
+            message = "Please enter a name.";
+            lastNameField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        }
+        if(nonAlpha.matcher(firstNameField.getText()).find()){
+            nameViolation = true;
+            message = "Sorry, only letters A-z are allowed for the name.";
+            firstNameField.setText("");
+            firstNameField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        }
+        if(nonAlpha.matcher(lastNameField.getText()).find()){
+            nameViolation = true;
+            message = "Sorry, only letters A-z are allowed for the name.";
+            lastNameField.setText("");
+            lastNameField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+        }
+        if(nameViolation){
+            JOptionPane.showMessageDialog(rootPane, message, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else if(passwordField.getPassword().length < 8){
+            JOptionPane.showMessageDialog(rootPane, "Sorry, passwords must be at least 8 characters in length.", "Error", JOptionPane.ERROR_MESSAGE);
+            passwordField.setText("");
+            passwordField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            passwordConfirmField.setText("");
+        }
+        else if(!Arrays.equals(passwordField.getPassword(), passwordConfirmField.getPassword())){
+            JOptionPane.showMessageDialog(rootPane, "Sorry, your passwords don't match.", "Error", JOptionPane.ERROR_MESSAGE);
+            passwordField.setText("");
+            passwordField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            passwordConfirmField.setText("");
+            passwordConfirmField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         }
         else{
-            manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-        }*/
+            Run.addNewAccount(new Account(firstNameField.getText(), lastNameField.getText()));
+            JOptionPane.showMessageDialog(rootPane, "New account created successfully!\nYour username for login is: " + firstNameField.getText() + " " + lastNameField.getText(), "Success!", JOptionPane.INFORMATION_MESSAGE);
+            newBackButtonActionPerformed(null);
+        }
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void newBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBackButtonActionPerformed

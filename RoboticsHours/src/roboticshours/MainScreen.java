@@ -517,7 +517,7 @@ public class MainScreen extends JFrame implements TableModelListener{
             
             manualDateEntry.setBorder(defaultBorder);
             JOptionPane.showMessageDialog(rootPane, "Added successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
-            newBackButtonActionPerformed(evt); 
+            newBackButtonActionPerformed(null); 
         }
         else{
             manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
@@ -545,6 +545,9 @@ public class MainScreen extends JFrame implements TableModelListener{
         }
         if(!itemsToDelete){
             JOptionPane.showMessageDialog(rootPane, "There are no entries selected.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+            ImportExport.exportSingleFile(account);
         }
         entryTable.clearSelection();
     }//GEN-LAST:event_deleteButtonActionPerformed

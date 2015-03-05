@@ -23,7 +23,7 @@ public class Account {
      * @param n2 the user's last name
      */
     public Account(String n, String n2) { //Constructor A: Users should use this constructor.
-        ID = new File("data").listFiles().length;
+        ID = new File("data").listFiles().length + 1;
         firstName = n;
         lastName = n2;
         entryList = new ArrayList<>();

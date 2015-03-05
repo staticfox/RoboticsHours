@@ -189,12 +189,15 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
         else if(validCredentials){ //IF valid login
             Encryptor.makeKey(hashedCredentials);
             ImportExport.importSingleFile(file);
+            int ID = Integer.parseInt(file.getName().replaceAll("[^0-9]", ""));
             System.out.println("Valid login detected. Entries imported.");
-            System.out.println(Run.getAccountList().get(0).getEntries());
+            System.out.println(Run.getAccount(ID).getEntries());
             System.out.println("~~~~");
             Run.hideLoginScreen();
-            java.awt.EventQueue.invokeLater(() -> {
-                new MainScreen(Run.getAccountList().get(0)).setVisible(true);
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new MainScreen(Run.getAccount(ID)).setVisible(true);
+                }
             });
         }
         else{

@@ -156,11 +156,10 @@ public class ImportExport { //File Structure:
                 
                 try{
                     Run.addAccount(new Account(
-                            Integer.parseInt(f.getName().replaceAll("[^0-9]", "")), //ID
-                            new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[0], 
-                            new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[1],
-                            input), //Name
-                            Integer.parseInt(f.getName().replaceAll("[^0-9]", ""))
+                        Integer.parseInt(f.getName().replaceAll("[^0-9]", "")), //ID
+                        new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[0], 
+                        new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[1],
+                        input) //Name
                     );
                 }
                 catch(NumberFormatException | IllegalBlockSizeException | BadPaddingException e){}
@@ -247,7 +246,7 @@ public class ImportExport { //File Structure:
             }
             
             try{
-                Run.getAccountList().add(new Account(
+                Run.addAccount(new Account(
                         Integer.parseInt(f.getName().replaceAll("[^0-9]", "")), //ID
                         new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[0], 
                         new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[1],
@@ -294,7 +293,7 @@ public class ImportExport { //File Structure:
         }
         //ID hours day1 month1 date1 hour1:minute1:second1 timeZone1 year1 day2 month2 date2 hour2:minute2:second2 timeZone2 year2
         for (String[] s : toEntry) {  //For each row array of data Strings in the toEntry table(2D array)
-            int id = Integer.parseInt(s[0]) - 1; //The ID of the account will be the first data value(ID) - 1 due to 0 base
+            int id = Integer.parseInt(s[0]); //The ID of the account will be the first data value(ID) - 1 due to 0 base
             Calendar date = new GregorianCalendar(Integer.parseInt(s[5]), //Create a new GregorianCalendar with year for field date in Entry
                     Integer.parseInt(s[4]), //month -> int(!)
                     Integer.parseInt(s[3]));//date
@@ -305,9 +304,9 @@ public class ImportExport { //File Structure:
                     Integer.parseInt(s[6]));
             dateCreated.setLenient(false);
 
-            Run.getAccountList().get(id) //Get account at given ID for each string[] representation of Entry in toEntry[][]
+            Run.getAccount(id) //Get account at given ID for each string[] representation of Entry in toEntry[][]
                     .addEntry(new Entry( //Add a new entry to the Account
-                    Run.getAccountList().get(id), //with the account from the given ID
+                    Run.getAccount(id), //with the account from the given ID
                     Integer.parseInt(s[2]), //Hours -> parseInt
                     date, //GregorianCalendar date
                     dateCreated //GregorianCalendar dateCreated
@@ -351,7 +350,7 @@ public class ImportExport { //File Structure:
         }
         //ID hours day1 month1 date1 hour1:minute1:second1 timeZone1 year1 day2 month2 date2 hour2:minute2:second2 timeZone2 year2
         for (String[] s : toEntry) {  //For each row array of data Strings in the toEntry table(2D array)
-            int id = Integer.parseInt(s[0]) - 1; //The ID of the account will be the first data value(ID) - 1 due to 0 base
+            int id = Integer.parseInt(s[0]); //The ID of the account will be the first data value(ID) - 1 due to 0 base
             Calendar date = new GregorianCalendar(Integer.parseInt(s[5]), //Create a new GregorianCalendar with year for field date in Entry
                     Integer.parseInt(s[4]), //month -> int(!)
                     Integer.parseInt(s[3]));//date
@@ -362,9 +361,9 @@ public class ImportExport { //File Structure:
                     Integer.parseInt(s[6]));
             dateCreated.setLenient(false);
 
-            Run.getAccountList().get(0) //Get account at given ID for each string[] representation of Entry in toEntry[][]
+            Run.getAccount(id) //Get account at given ID for each string[] representation of Entry in toEntry[][]
                     .addEntry(new Entry( //Add a new entry to the Account
-                    Run.getAccountList().get(0), //with the account from the given ID
+                    Run.getAccount(id), //with the account from the given ID
                     Integer.parseInt(s[2]), //Hours -> parseInt
                     date, //GregorianCalendar date
                     dateCreated //GregorianCalendar dateCreated
@@ -377,12 +376,13 @@ public class ImportExport { //File Structure:
         int ID = 1;
         while(true){
             if(ID < 10){
-                 if(new File("data/0" + ID + ".dat").exists()) ID++;
+                 if(new File("data/0" + ID + ".dat").exists())  ID++;
+                 else return ID;
             }
             else if(ID > 9){
                 if(new File("data/" + ID + ".dat").exists()) ID++;
+                else return ID;
             }
-            else return ID;
         }
     }
 }

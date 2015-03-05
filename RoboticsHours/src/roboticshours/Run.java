@@ -20,13 +20,22 @@ public class Run {
         return accountList;
     }
     
-    public static void addAccount(Account a, int i){
+    public static void addAccount(Account a){
         accountList.add(a);
     }
     
     public static void addNewAccount(Account a){
         accountList.add(a);
         ImportExport.exportSingleFile(a);
+    }
+    
+    public static Account getAccount(int ID){
+        for(Account a : accountList){
+            if(a.getAccountID() == ID){
+                return a;
+            }
+        }
+        return null;
     }
 
     /**

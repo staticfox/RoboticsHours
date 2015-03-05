@@ -46,7 +46,7 @@ public class Run {
 
         Encryptor.makeKey(Encryptor.hash("Hikari+SaitoRockman.EXE".getBytes(), 1024));
 
-        Account test2 = new Account(2, "Hikari", "Saito");
+        Account test2 = new Account(3, "Hikari", "Saito");
         accountList.add(test2);
 
         test2.addEntry(new Entry(test2, 60, new GregorianCalendar()));

@@ -23,7 +23,7 @@ public class Account {
      * @param n2 the user's last name
      */
     public Account(String n, String n2) { //Constructor A: Users should use this constructor.
-        ID = new File("data").listFiles().length + 1;
+        ID = ImportExport.getNextID();
         firstName = n;
         lastName = n2;
         entryList = new ArrayList<>();
@@ -89,5 +89,10 @@ public class Account {
      */
     public void clearEntries() {
         entryList.clear();
+    }
+    
+    @Override
+    public String toString(){
+        return "ID: " + ID + " | Name: " + firstName + lastName;
     }
 }

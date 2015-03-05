@@ -61,7 +61,6 @@ public class ImportExport { //File Structure:
         
         try {
             Files.createFile(FileSystems.getDefault().getPath("data", f.getName()));
-            //Encryptor.makeKey(Encryptor.getKey());
             try(PrintWriter out = new PrintWriter(f)){
                 
                 out.println(Arrays.toString(Encryptor.getKey()));
@@ -92,7 +91,9 @@ public class ImportExport { //File Structure:
         
         int inputCounter = 0;
         int bytePositionCounter = 0;
-        for (File f : new File("data").listFiles()) { //For each File in /data/
+        File[] fileList = new File("data").listFiles();
+        Arrays.sort(fileList);
+        for (File f : fileList) { //For each File in /data/
             try(BufferedReader br = new BufferedReader(new FileReader(f))){
                 while(true){
                     int i = br.read();
@@ -154,7 +155,7 @@ public class ImportExport { //File Structure:
                 }
                 
                 try{
-                    Run.getAccountList().add(new Account(
+                    Run.addAccount(new Account(
                             Integer.parseInt(f.getName().replaceAll("[^0-9]", "")), //ID
                             new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[0], 
                             new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[1]) //Name
@@ -367,5 +368,18 @@ public class ImportExport { //File Structure:
                     )); //Constructor B for Entry
         }
         stringsIn.clear();
+    }
+    
+    public static int getNextID(){
+        int ID = 1;
+        while(true){
+            if(ID < 10){
+                 if(new File("data/0" + ID + ".dat").exists()) ID++;
+            }
+            else if(ID > 9){
+                if(new File("data/" + ID + ".dat").exists()) ID++;
+            }
+            else return ID;
+        }
     }
 }

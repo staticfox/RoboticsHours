@@ -2,7 +2,6 @@ package roboticshours;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -593,7 +592,6 @@ public class AdminScreen extends JFrame implements TableModelListener{
             
             Arrays.fill(username, (byte)0); //Clear username
             Arrays.fill(password, (byte)0); //Clear password
-
             byte[] hashedCredentials = Encryptor.hash(credentials, 1024); //Hashes the byte representation of credentials using static salt and 1024 iterations.
             Run.addNewAccount(new Account(firstNameField.getText(), lastNameField.getText(), Encryptor.hash(credentials, 1024)));
             Arrays.fill(credentials, (byte)0); //Clear credentials

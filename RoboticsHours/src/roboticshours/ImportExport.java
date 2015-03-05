@@ -29,8 +29,6 @@ public class ImportExport { //File Structure:
      */
     
     public static void exportAll(){
-        new File("data").mkdir(); //Attempt to make the directory /data/ in RoboticsHours
-        
         for (Account a : Run.getAccountList()) { //For each account in the accountlist maintained by Run.java
             exportSingleFile(a);
         }

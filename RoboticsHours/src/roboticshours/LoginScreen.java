@@ -195,6 +195,7 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
             System.out.println("~~~~");
             Run.hideLoginScreen();
             java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     new MainScreen(Run.getAccount(ID)).setVisible(true);
                 }

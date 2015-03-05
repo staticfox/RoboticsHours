@@ -1,5 +1,6 @@
 package roboticshours;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import javax.swing.JFrame;
@@ -77,8 +78,14 @@ public class Run {
 
     public static void main(String[] args) {//TODO: Fix import method trying to call Filename - 1 by finally differentiating between luser and admin methods.
         save();
-
+        new File("data").mkdir();
         loginScreen = new LoginScreen();
-        loginScreen.setVisible(true); //Timesheet routine, set! Execute!
+        java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    loginScreen.setVisible(true); //Timesheet routine, set! Execute!
+                }
+            });
+        
     }
 }

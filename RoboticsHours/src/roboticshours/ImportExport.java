@@ -95,7 +95,6 @@ public class ImportExport { //File Structure:
             try(BufferedReader br = new BufferedReader(new FileReader(f))){
                 while(true){
                     int i = br.read();
-                    System.out.println(i);
                     if(i == 44 || i == 93){ //comma value separator or end bracket ]
                         switch(bytePositionCounter){
                             case 4:
@@ -121,7 +120,6 @@ public class ImportExport { //File Structure:
                                 store = bytes[0];
                                 break;
                         }
-                        System.out.println("Char complete: " + store);
                         input[inputCounter] = (byte) store;
                         inputCounter++;
                         if(i == 44) br.read(); //dispose of space
@@ -186,7 +184,6 @@ public class ImportExport { //File Structure:
         try(BufferedReader br = new BufferedReader(new FileReader(f))){
             while(true){
                 int i = br.read();
-                System.out.println(i);
                 if(i == 44 || i == 93){ //comma value separator or end bracket ]
                     switch(bytePositionCounter){
                         case 4:
@@ -212,7 +209,6 @@ public class ImportExport { //File Structure:
                             store = bytes[0];
                             break;
                     }
-                    System.out.println("Char complete: " + store);
                     input[inputCounter] = (byte) store;
                     inputCounter++;
                     if(i == 44) br.read(); //dispose of space
@@ -234,8 +230,6 @@ public class ImportExport { //File Structure:
 
             Encryptor.makeKey(input);
             
-            Arrays.fill(input, (byte)0);
-            
             String arrayRepresentation = br.readLine();
             String[] byteStrings = arrayRepresentation.substring(1, arrayRepresentation.length() - 1).split(", ");
             byte[] nameBytesToDecrypt = new byte[byteStrings.length];
@@ -252,6 +246,8 @@ public class ImportExport { //File Structure:
                 );
             }
             catch(NumberFormatException | IllegalBlockSizeException | BadPaddingException e){}
+            
+            Arrays.fill(input, (byte)0);
         }
             
         catch (IOException e) {

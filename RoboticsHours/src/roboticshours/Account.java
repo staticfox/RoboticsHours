@@ -1,6 +1,7 @@
 package roboticshours;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A class to organize hour entries.
@@ -40,7 +41,7 @@ public class Account {
         firstName = n;
         lastName = n2;
         entryList = new ArrayList<>();
-        hashedCredentials = b;
+        hashedCredentials = Arrays.copyOf(b, b.length);
     }
 
     /**
@@ -68,7 +69,7 @@ public class Account {
         firstName = n;
         lastName = n2;
         entryList = new ArrayList<>();
-        hashedCredentials = b;
+        hashedCredentials = Arrays.copyOf(b, b.length);
     }
 
     /**

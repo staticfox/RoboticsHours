@@ -195,7 +195,7 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
         else if(validCredentials){ //IF valid login
             Encryptor.makeKey(hashedCredentials);
             ImportExport.importSingleFile(file);
-            int ID = Integer.parseInt(file.getName().replaceAll("[^0-9]", ""));
+            final int ID = Integer.parseInt(file.getName().replaceAll("[^0-9]", ""));
             Run.hideLoginScreen();
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override

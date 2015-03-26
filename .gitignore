@@ -4,5 +4,5 @@
 /RoboticsHours/manifest.mf
 /RoboticsHours/build/
 /RoboticsHours/data/
-RoboticsHours/src/roboticshours/MainScreen.form
-RoboticsHours/src/roboticshours/AdminScreen.form
+UMLDiagrams/
+*.form

@@ -2,14 +2,12 @@ package roboticshours;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -91,70 +89,70 @@ public class MainScreen extends JFrame implements TableModelListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mainPanel = new javax.swing.JPanel();
-        startPanel = new javax.swing.JPanel();
-        newButton = new javax.swing.JButton();
-        viewButton = new javax.swing.JButton();
-        greetingLabel = new javax.swing.JLabel();
-        viewEditPanel = new javax.swing.JPanel();
-        entryTableHeader = new javax.swing.JScrollPane();
-        entryTable = new javax.swing.JTable();
-        tableBackButton = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
-        newEntryPanel = new javax.swing.JPanel();
-        manualDateEntry = new javax.swing.JTextField();
-        userName = new javax.swing.JLabel();
-        nameLabel = new javax.swing.JLabel();
-        currentDate = new javax.swing.JRadioButton();
-        hourSelector = new javax.swing.JSpinner();
-        hourLabel = new javax.swing.JLabel();
-        dateLabel = new javax.swing.JLabel();
-        submitButton = new javax.swing.JButton();
-        newBackButton = new javax.swing.JButton();
+        mainPanel = new JPanel();
+        startPanel = new JPanel();
+        newButton = new JButton();
+        viewButton = new JButton();
+        greetingLabel = new JLabel();
+        viewEditPanel = new JPanel();
+        entryTableHeader = new JScrollPane();
+        entryTable = new JTable();
+        tableBackButton = new JButton();
+        deleteButton = new JButton();
+        newEntryPanel = new JPanel();
+        manualDateEntry = new JTextField();
+        userName = new JLabel();
+        nameLabel = new JLabel();
+        currentDate = new JRadioButton();
+        hourSelector = new JSpinner();
+        hourLabel = new JLabel();
+        dateLabel = new JLabel();
+        submitButton = new JButton();
+        newBackButton = new JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
 
         mainPanel.setLayout(new java.awt.CardLayout());
 
         newButton.setText("Enter Hours");
         newButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 newButtonActionPerformed(evt);
             }
         });
 
         viewButton.setText("View/Edit Hours");
         viewButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 viewButtonActionPerformed(evt);
             }
         });
 
         greetingLabel.setText("Hello. What would you like to do?");
 
-        javax.swing.GroupLayout startPanelLayout = new javax.swing.GroupLayout(startPanel);
+        GroupLayout startPanelLayout = new GroupLayout(startPanel);
         startPanel.setLayout(startPanelLayout);
         startPanelLayout.setHorizontalGroup(
-            startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            startPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(startPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(newButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(viewButton)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, startPanelLayout.createSequentialGroup()
+            .addGroup(GroupLayout.Alignment.TRAILING, startPanelLayout.createSequentialGroup()
                 .addContainerGap(91, Short.MAX_VALUE)
                 .addComponent(greetingLabel)
                 .addGap(88, 88, 88))
         );
         startPanelLayout.setVerticalGroup(
-            startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, startPanelLayout.createSequentialGroup()
+            startPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, startPanelLayout.createSequentialGroup()
                 .addContainerGap(77, Short.MAX_VALUE)
                 .addComponent(greetingLabel)
                 .addGap(55, 55, 55)
-                .addGroup(startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(startPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(newButton)
                     .addComponent(viewButton))
                 .addContainerGap())
@@ -162,7 +160,7 @@ public class MainScreen extends JFrame implements TableModelListener{
 
         mainPanel.add(startPanel, "startPanel");
 
-        entryTable.setModel(new javax.swing.table.DefaultTableModel(
+        entryTable.setModel(new DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -200,36 +198,36 @@ public class MainScreen extends JFrame implements TableModelListener{
 
         tableBackButton.setText("Back");
         tableBackButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 tableBackButtonActionPerformed(evt);
             }
         });
 
         deleteButton.setText("Delete Selected");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 deleteButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout viewEditPanelLayout = new javax.swing.GroupLayout(viewEditPanel);
+        GroupLayout viewEditPanelLayout = new GroupLayout(viewEditPanel);
         viewEditPanel.setLayout(viewEditPanelLayout);
         viewEditPanelLayout.setHorizontalGroup(
-            viewEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(entryTableHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+            viewEditPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(entryTableHeader, GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
             .addGroup(viewEditPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tableBackButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(deleteButton)
                 .addContainerGap())
         );
         viewEditPanelLayout.setVerticalGroup(
-            viewEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            viewEditPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(viewEditPanelLayout.createSequentialGroup()
-                .addComponent(entryTableHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addGroup(viewEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(entryTableHeader, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(viewEditPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(tableBackButton)
                     .addComponent(deleteButton))
                 .addContainerGap())
@@ -237,21 +235,21 @@ public class MainScreen extends JFrame implements TableModelListener{
 
         mainPanel.add(viewEditPanel, "viewEditPanel");
 
-        manualDateEntry.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        manualDateEntry.setHorizontalAlignment(JTextField.RIGHT);
 
-        userName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        userName.setHorizontalAlignment(SwingConstants.RIGHT);
         userName.setText(getName());
 
         nameLabel.setText("Name:");
 
         currentDate.setText("Use today's date");
         currentDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 currentDateActionPerformed(evt);
             }
         });
 
-        hourSelector.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+        hourSelector.setModel(new SpinnerNumberModel(1, 1, 12, 1));
 
         hourLabel.setText("Number of hours:");
 
@@ -259,63 +257,63 @@ public class MainScreen extends JFrame implements TableModelListener{
 
         submitButton.setText("Submit");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 submitButtonActionPerformed(evt);
             }
         });
 
         newBackButton.setText("Back");
         newBackButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 newBackButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout newEntryPanelLayout = new javax.swing.GroupLayout(newEntryPanel);
+        GroupLayout newEntryPanelLayout = new GroupLayout(newEntryPanel);
         newEntryPanel.setLayout(newEntryPanelLayout);
         newEntryPanelLayout.setHorizontalGroup(
-            newEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newEntryPanelLayout.createSequentialGroup()
+            newEntryPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, newEntryPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(newEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, newEntryPanelLayout.createSequentialGroup()
+                .addGroup(newEntryPanelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                    .addGroup(GroupLayout.Alignment.LEADING, newEntryPanelLayout.createSequentialGroup()
                         .addComponent(nameLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, newEntryPanelLayout.createSequentialGroup()
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(userName, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE))
+                    .addGroup(GroupLayout.Alignment.LEADING, newEntryPanelLayout.createSequentialGroup()
                         .addComponent(newBackButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(submitButton))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, newEntryPanelLayout.createSequentialGroup()
+                    .addGroup(GroupLayout.Alignment.LEADING, newEntryPanelLayout.createSequentialGroup()
                         .addComponent(dateLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(currentDate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
-                        .addComponent(manualDateEntry, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
+                        .addComponent(manualDateEntry, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
                     .addGroup(newEntryPanelLayout.createSequentialGroup()
                         .addComponent(hourLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(hourSelector, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(hourSelector, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         newEntryPanelLayout.setVerticalGroup(
-            newEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            newEntryPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(newEntryPanelLayout.createSequentialGroup()
                 .addContainerGap(19, Short.MAX_VALUE)
-                .addGroup(newEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(userName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(newEntryPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(nameLabel, GroupLayout.Alignment.TRAILING)
+                    .addComponent(userName, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(newEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(hourSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(newEntryPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(hourSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(hourLabel))
                 .addGap(18, 18, 18)
-                .addGroup(newEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(newEntryPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(dateLabel)
                     .addComponent(currentDate)
-                    .addComponent(manualDateEntry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(manualDateEntry, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
-                .addGroup(newEntryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(newEntryPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(newBackButton)
                     .addComponent(submitButton))
                 .addContainerGap())
@@ -323,15 +321,15 @@ public class MainScreen extends JFrame implements TableModelListener{
 
         mainPanel.add(newEntryPanel, "newEntryPanel");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         );
 
         getAccessibleContext().setAccessibleName("mainFrame");
@@ -339,11 +337,11 @@ public class MainScreen extends JFrame implements TableModelListener{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+    private void newButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         ((CardLayout)(mainPanel.getLayout())).show(mainPanel, "newEntryPanel");
     }//GEN-LAST:event_newButtonActionPerformed
 
-    private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
+    private void viewButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
         for(int i = dataModel.getRowCount(); i > 0; i--){
             dataModel.setValueAt(false, i - 1, 0);
         }
@@ -351,7 +349,7 @@ public class MainScreen extends JFrame implements TableModelListener{
         ((CardLayout)(mainPanel.getLayout())).show(mainPanel, "viewEditPanel");
     }//GEN-LAST:event_viewButtonActionPerformed
 
-    private void newBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBackButtonActionPerformed
+    private void newBackButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_newBackButtonActionPerformed
         ((CardLayout)(mainPanel.getLayout())).show(mainPanel, "startPanel");
         hourSelector.setValue(1);
         currentDate.setSelected(false);
@@ -360,11 +358,11 @@ public class MainScreen extends JFrame implements TableModelListener{
         manualDateEntry.setEditable(true);
     }//GEN-LAST:event_newBackButtonActionPerformed
 
-    private void tableBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tableBackButtonActionPerformed
+    private void tableBackButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_tableBackButtonActionPerformed
         ((CardLayout)(mainPanel.getLayout())).show(mainPanel, "startPanel");
     }//GEN-LAST:event_tableBackButtonActionPerformed
 
-    private void currentDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_currentDateActionPerformed
+    private void currentDateActionPerformed(ActionEvent evt) {//GEN-FIRST:event_currentDateActionPerformed
         if(currentDate.isSelected()){
             Calendar today = Calendar.getInstance();
             if(today.get(Calendar.MONTH) < 9)
@@ -489,7 +487,7 @@ public class MainScreen extends JFrame implements TableModelListener{
         }
     }
     
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+    private void submitButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         if(parseDate(manualDateEntry.getText())){
             Calendar date = new GregorianCalendar();
             String[] datePieces = manualDateEntry.getText().split("/"); //Split the date into 3 pieces.
@@ -524,7 +522,7 @@ public class MainScreen extends JFrame implements TableModelListener{
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
-    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+    private void deleteButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         boolean delete = false, itemsToDelete = false;
         String message = "Are you sure you want to delete the selected entries?\nThis cannot be undone!";
         
@@ -553,25 +551,25 @@ public class MainScreen extends JFrame implements TableModelListener{
     }//GEN-LAST:event_deleteButtonActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton currentDate;
-    private javax.swing.JLabel dateLabel;
-    private javax.swing.JButton deleteButton;
-    private javax.swing.JTable entryTable;
-    private javax.swing.JScrollPane entryTableHeader;
-    private javax.swing.JLabel greetingLabel;
-    private javax.swing.JLabel hourLabel;
-    private javax.swing.JSpinner hourSelector;
-    private javax.swing.JPanel mainPanel;
-    private javax.swing.JTextField manualDateEntry;
-    private javax.swing.JLabel nameLabel;
-    private javax.swing.JButton newBackButton;
-    private javax.swing.JButton newButton;
-    private javax.swing.JPanel newEntryPanel;
-    private javax.swing.JPanel startPanel;
-    private javax.swing.JButton submitButton;
-    private javax.swing.JButton tableBackButton;
-    private javax.swing.JLabel userName;
-    private javax.swing.JButton viewButton;
-    private javax.swing.JPanel viewEditPanel;
+    private JRadioButton currentDate;
+    private JLabel dateLabel;
+    private JButton deleteButton;
+    private JTable entryTable;
+    private JScrollPane entryTableHeader;
+    private JLabel greetingLabel;
+    private JLabel hourLabel;
+    private JSpinner hourSelector;
+    private JPanel mainPanel;
+    private JTextField manualDateEntry;
+    private JLabel nameLabel;
+    private JButton newBackButton;
+    private JButton newButton;
+    private JPanel newEntryPanel;
+    private JPanel startPanel;
+    private JButton submitButton;
+    private JButton tableBackButton;
+    private JLabel userName;
+    private JButton viewButton;
+    private JPanel viewEditPanel;
     // End of variables declaration//GEN-END:variables
 }

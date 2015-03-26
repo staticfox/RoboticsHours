@@ -2,15 +2,13 @@ package roboticshours;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
-import javax.swing.BorderFactory;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -90,33 +88,33 @@ public class AdminScreen extends JFrame implements TableModelListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mainPanel = new javax.swing.JPanel();
-        startPanel = new javax.swing.JPanel();
-        newButton = new javax.swing.JButton();
-        viewButton = new javax.swing.JButton();
-        greetingLabel = new javax.swing.JLabel();
-        viewEditPanel = new javax.swing.JPanel();
-        entryTableHeader = new javax.swing.JScrollPane();
-        entryTable = new javax.swing.JTable();
-        tableBackButton = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
-        newUserPanel = new javax.swing.JPanel();
-        firstNameLabel = new javax.swing.JLabel();
-        lastNameLabel = new javax.swing.JLabel();
-        passwordLabel = new javax.swing.JLabel();
-        confirmLabel = new javax.swing.JLabel();
-        submitButton = new javax.swing.JButton();
-        newBackButton = new javax.swing.JButton();
-        firstNameField = new javax.swing.JTextField();
-        lastNameField = new javax.swing.JTextField();
-        passwordField = new javax.swing.JPasswordField(){
+        mainPanel = new JPanel();
+        startPanel = new JPanel();
+        newButton = new JButton();
+        viewButton = new JButton();
+        greetingLabel = new JLabel();
+        viewEditPanel = new JPanel();
+        entryTableHeader = new JScrollPane();
+        entryTable = new JTable();
+        tableBackButton = new JButton();
+        deleteButton = new JButton();
+        newUserPanel = new JPanel();
+        firstNameLabel = new JLabel();
+        lastNameLabel = new JLabel();
+        passwordLabel = new JLabel();
+        confirmLabel = new JLabel();
+        submitButton = new JButton();
+        newBackButton = new JButton();
+        firstNameField = new JTextField();
+        lastNameField = new JTextField();
+        passwordField = new JPasswordField(){
             public void paste(){}
         };
-        passwordConfirmField = new javax.swing.JPasswordField(){
+        passwordConfirmField = new JPasswordField(){
             public void paste(){}
         };
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
 
         mainPanel.setLayout(new java.awt.CardLayout());
@@ -126,42 +124,42 @@ public class AdminScreen extends JFrame implements TableModelListener{
         newButton.setActionCommand("Add New Account");
         newButton.setLabel("Add New Account");
         newButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 newButtonActionPerformed(evt);
             }
         });
 
         viewButton.setText("View/Edit Hours");
         viewButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 viewButtonActionPerformed(evt);
             }
         });
 
         greetingLabel.setText("Hello. What would you like to do?");
 
-        javax.swing.GroupLayout startPanelLayout = new javax.swing.GroupLayout(startPanel);
+        GroupLayout startPanelLayout = new GroupLayout(startPanel);
         startPanel.setLayout(startPanelLayout);
         startPanelLayout.setHorizontalGroup(
-            startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            startPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(startPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(newButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(viewButton)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, startPanelLayout.createSequentialGroup()
+            .addGroup(GroupLayout.Alignment.TRAILING, startPanelLayout.createSequentialGroup()
                 .addContainerGap(91, Short.MAX_VALUE)
                 .addComponent(greetingLabel)
                 .addGap(88, 88, 88))
         );
         startPanelLayout.setVerticalGroup(
-            startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, startPanelLayout.createSequentialGroup()
+            startPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, startPanelLayout.createSequentialGroup()
                 .addContainerGap(77, Short.MAX_VALUE)
                 .addComponent(greetingLabel)
                 .addGap(55, 55, 55)
-                .addGroup(startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(startPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(newButton)
                     .addComponent(viewButton))
                 .addContainerGap())
@@ -171,7 +169,7 @@ public class AdminScreen extends JFrame implements TableModelListener{
 
         viewEditPanel.setPreferredSize(new java.awt.Dimension(338, 180));
 
-        entryTable.setModel(new javax.swing.table.DefaultTableModel(
+        entryTable.setModel(new DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -209,36 +207,36 @@ public class AdminScreen extends JFrame implements TableModelListener{
 
         tableBackButton.setText("Back");
         tableBackButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 tableBackButtonActionPerformed(evt);
             }
         });
 
         deleteButton.setText("Delete Selected");
         deleteButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 deleteButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout viewEditPanelLayout = new javax.swing.GroupLayout(viewEditPanel);
+        GroupLayout viewEditPanelLayout = new GroupLayout(viewEditPanel);
         viewEditPanel.setLayout(viewEditPanelLayout);
         viewEditPanelLayout.setHorizontalGroup(
-            viewEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(entryTableHeader, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+            viewEditPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(entryTableHeader, GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
             .addGroup(viewEditPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(tableBackButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(deleteButton)
                 .addContainerGap())
         );
         viewEditPanelLayout.setVerticalGroup(
-            viewEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            viewEditPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(viewEditPanelLayout.createSequentialGroup()
-                .addComponent(entryTableHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addGroup(viewEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(entryTableHeader, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(viewEditPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(tableBackButton)
                     .addComponent(deleteButton))
                 .addContainerGap())
@@ -258,68 +256,68 @@ public class AdminScreen extends JFrame implements TableModelListener{
 
         submitButton.setText("Submit");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 submitButtonActionPerformed(evt);
             }
         });
 
         newBackButton.setText("Back");
         newBackButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 newBackButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout newUserPanelLayout = new javax.swing.GroupLayout(newUserPanel);
+        GroupLayout newUserPanelLayout = new GroupLayout(newUserPanel);
         newUserPanel.setLayout(newUserPanelLayout);
         newUserPanelLayout.setHorizontalGroup(
-            newUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            newUserPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(newUserPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(newUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(newUserPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(newUserPanelLayout.createSequentialGroup()
                         .addComponent(newBackButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(submitButton))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newUserPanelLayout.createSequentialGroup()
-                        .addGroup(newUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(GroupLayout.Alignment.TRAILING, newUserPanelLayout.createSequentialGroup()
+                        .addGroup(newUserPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addComponent(firstNameLabel)
                             .addComponent(lastNameLabel))
                         .addGap(78, 78, 78)
-                        .addGroup(newUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(firstNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                        .addGroup(newUserPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(firstNameField, GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                             .addComponent(lastNameField)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, newUserPanelLayout.createSequentialGroup()
-                        .addGroup(newUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(GroupLayout.Alignment.TRAILING, newUserPanelLayout.createSequentialGroup()
+                        .addGroup(newUserPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addComponent(passwordLabel)
                             .addComponent(confirmLabel))
                         .addGap(92, 92, 92)
-                        .addGroup(newUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(newUserPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addComponent(passwordField)
                             .addComponent(passwordConfirmField))))
                 .addContainerGap())
         );
         newUserPanelLayout.setVerticalGroup(
-            newUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            newUserPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(newUserPanelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(newUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(newUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(firstNameLabel)
-                    .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(newUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(firstNameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(newUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(lastNameLabel)
-                    .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(newUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lastNameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(newUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordLabel)
-                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(newUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(newUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(confirmLabel)
-                    .addComponent(passwordConfirmField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addGroup(newUserPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(passwordConfirmField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(newUserPanelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(newBackButton)
                     .addComponent(submitButton))
                 .addContainerGap())
@@ -327,15 +325,15 @@ public class AdminScreen extends JFrame implements TableModelListener{
 
         mainPanel.add(newUserPanel, "newUserPanel");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(mainPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         );
 
         getAccessibleContext().setAccessibleName("mainFrame");
@@ -343,11 +341,11 @@ public class AdminScreen extends JFrame implements TableModelListener{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+    private void newButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
         ((CardLayout)(mainPanel.getLayout())).show(mainPanel, "newUserPanel");
     }//GEN-LAST:event_newButtonActionPerformed
 
-    private void viewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
+    private void viewButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_viewButtonActionPerformed
         for(int i = dataModel.getRowCount(); i > 0; i--){
             dataModel.setValueAt(false, i - 1, 0);
         }
@@ -355,7 +353,7 @@ public class AdminScreen extends JFrame implements TableModelListener{
         ((CardLayout)(mainPanel.getLayout())).show(mainPanel, "viewEditPanel");
     }//GEN-LAST:event_viewButtonActionPerformed
 
-    private void tableBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tableBackButtonActionPerformed
+    private void tableBackButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_tableBackButtonActionPerformed
         ((CardLayout)(mainPanel.getLayout())).show(mainPanel, "startPanel");
     }//GEN-LAST:event_tableBackButtonActionPerformed
     
@@ -481,7 +479,7 @@ public class AdminScreen extends JFrame implements TableModelListener{
         }
     }
     
-    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+    private void deleteButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         boolean delete = false, itemsToDelete = false;
         String message = "Are you sure you want to delete the selected entries?\nThis cannot be undone!";
         
@@ -522,7 +520,7 @@ public class AdminScreen extends JFrame implements TableModelListener{
         
     }//GEN-LAST:event_deleteButtonActionPerformed
 
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+    private void submitButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         firstNameField.setBorder(defaultBorder);
         lastNameField.setBorder(defaultBorder);
         passwordField.setBorder(defaultBorder);
@@ -601,7 +599,7 @@ public class AdminScreen extends JFrame implements TableModelListener{
         }
     }//GEN-LAST:event_submitButtonActionPerformed
 
-    private void newBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBackButtonActionPerformed
+    private void newBackButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_newBackButtonActionPerformed
         firstNameField.setText("");
         lastNameField.setText("");
         passwordField.setText("");
@@ -614,26 +612,26 @@ public class AdminScreen extends JFrame implements TableModelListener{
     }//GEN-LAST:event_newBackButtonActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel confirmLabel;
-    private javax.swing.JButton deleteButton;
-    private javax.swing.JTable entryTable;
-    private javax.swing.JScrollPane entryTableHeader;
-    private javax.swing.JTextField firstNameField;
-    private javax.swing.JLabel firstNameLabel;
-    private javax.swing.JLabel greetingLabel;
-    private javax.swing.JTextField lastNameField;
-    private javax.swing.JLabel lastNameLabel;
-    private javax.swing.JPanel mainPanel;
-    private javax.swing.JButton newBackButton;
-    private javax.swing.JButton newButton;
-    private javax.swing.JPanel newUserPanel;
-    private javax.swing.JPasswordField passwordConfirmField;
-    private javax.swing.JPasswordField passwordField;
-    private javax.swing.JLabel passwordLabel;
-    private javax.swing.JPanel startPanel;
-    private javax.swing.JButton submitButton;
-    private javax.swing.JButton tableBackButton;
-    private javax.swing.JButton viewButton;
-    private javax.swing.JPanel viewEditPanel;
+    private JLabel confirmLabel;
+    private JButton deleteButton;
+    private JTable entryTable;
+    private JScrollPane entryTableHeader;
+    private JTextField firstNameField;
+    private JLabel firstNameLabel;
+    private JLabel greetingLabel;
+    private JTextField lastNameField;
+    private JLabel lastNameLabel;
+    private JPanel mainPanel;
+    private JButton newBackButton;
+    private JButton newButton;
+    private JPanel newUserPanel;
+    private JPasswordField passwordConfirmField;
+    private JPasswordField passwordField;
+    private JLabel passwordLabel;
+    private JPanel startPanel;
+    private JButton submitButton;
+    private JButton tableBackButton;
+    private JButton viewButton;
+    private JPanel viewEditPanel;
     // End of variables declaration//GEN-END:variables
 }

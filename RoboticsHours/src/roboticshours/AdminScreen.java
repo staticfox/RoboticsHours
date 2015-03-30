@@ -41,13 +41,13 @@ public class AdminScreen extends JFrame implements TableModelListener{
             Calendar dm = e.getDateModified(); 
             data[i][0] = false; 
             data[i][1] = e.getUser().getAccountName().replace("+", " "); 
-            data[i][2] = (d.get(Calendar.MONTH) + 1 + "/" + d.get(Calendar.DAY_OF_MONTH) + "/" + (d.get(Calendar.YEAR))); 
+            data[i][2] = d;
             data[i][3] = e.getHours(); 
-            data[i][4] = (dm.get(Calendar.MONTH) + 1 + "/" + dm.get(Calendar.DAY_OF_MONTH) + "/" + (dm.get(Calendar.YEAR))); 
+            data[i][4] = dm;
         }
         dataModel = new DefaultTableModel(data, new String [] {"", "Name", "Date", "Hours", "Date Modified"})
         {
-            Class[] types = new Class [] {Boolean.class, String.class, String.class, Integer.class, String.class};
+            Class[] types = new Class [] {Boolean.class, String.class, Calendar.class, Integer.class, Calendar.class};
             boolean[] canEdit = new boolean [] {true, false, true, true, false};
 
             @Override
@@ -62,7 +62,9 @@ public class AdminScreen extends JFrame implements TableModelListener{
         };
         dataModel.addTableModelListener(this); 
         entryTable.setModel(dataModel); 
+        entryTable.setAutoCreateRowSorter(true);
         
+        CalendarRenderer dateFormat = new CalendarRenderer();
         DefaultTableCellRenderer center = new DefaultTableCellRenderer(); 
         center.setHorizontalAlignment(JLabel.CENTER); 
         
@@ -74,9 +76,13 @@ public class AdminScreen extends JFrame implements TableModelListener{
             }
             else if(i == 3){ 
                 column.setPreferredWidth(10);
-                column.setCellRenderer(center); } 
-            else{ 
                 column.setCellRenderer(center); 
+            }
+            else if(i == 1){
+                column.setCellRenderer(center);
+            }
+            else{ 
+                column.setCellRenderer(dateFormat); 
             } 
         }
     }

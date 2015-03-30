@@ -39,15 +39,18 @@ public class ImportExport { //File Structure:
      * @param a
      */
     public static void exportSingleFile(Account a){
-        String id = a.getAccountID() < 10 ? "0" + a.getAccountID() : "" + a.getAccountID();//If account ID = 1-9, make 01-09, else simply print id
+        String id = a.getAccountID() < 10 ? "0" + a.getAccountID() : "" + a.getAccountID();
+        //If account ID = 1-9, make 01-09, else simply print id
             try{
-                Files.deleteIfExists(FileSystems.getDefault().getPath("data", id + ".dat"));//Deletes existing file if it exists
+                Files.deleteIfExists(FileSystems.getDefault().getPath("data", id + ".dat"));
+                //Deletes possible existing file
             }
             catch(IOException e){
                 System.out.println("IO Error: " + e);
             }
             
-            writeDataToFile(a, new File("data/" + id + ".dat")); //writeData from account A to a new File /data/$ID.dat
+            writeDataToFile(a, new File("data/" + id + ".dat")); 
+            //writeData from account A to a new File /data/$ID.dat
     }
     
     /**
@@ -55,10 +58,14 @@ public class ImportExport { //File Structure:
      * @param a
      * @param f
      */
-    public static void writeDataToFile(Account a, File f){ //Writes the Entry data from an Account to a File. File will most likely have filename Username/ID.dat
+    public static void writeDataToFile(Account a, File f){ 
+    //Writes the Entry data from an Account to a File. File will have filename ID.dat
         
         try {
             Files.createFile(FileSystems.getDefault().getPath("data", f.getName()));
+            
+            Encryptor.makeKey(a.getHashedCredentials());
+            
             try(PrintWriter out = new PrintWriter(f)){
                 
                 out.println(Arrays.toString(a.getHashedCredentials()));
@@ -141,8 +148,6 @@ public class ImportExport { //File Structure:
                 
                 Encryptor.makeKey(input);
                 
-                Arrays.fill(input, (byte)0);
-                
                 String arrayRepresentation = br.readLine();
                 String[] byteStrings = arrayRepresentation.substring(1, arrayRepresentation.length() - 1).split(", ");
                 byte[] nameBytesToDecrypt = new byte[byteStrings.length];
@@ -159,6 +164,9 @@ public class ImportExport { //File Structure:
                     );
                 }
                 catch(NumberFormatException | IllegalBlockSizeException | BadPaddingException e){}
+		
+		Arrays.fill(input, (byte)0);
+                
             }
             
             catch (IOException e) {
@@ -256,7 +264,8 @@ public class ImportExport { //File Structure:
         readDataSingle(f); //for each file, read the data and store in the account created above's entryList 
     }
     
-    public static void readData(File f){ //Takes a file f, reads the entries, puts them into the entryLists of Accounts.
+    public static void readData(File f){ 
+    //Takes a file f, reads the entries, puts them into the entryLists of Accounts.
         
         String[] byteString;
         byte[] toDecrypt;
@@ -267,7 +276,8 @@ public class ImportExport { //File Structure:
             br.readLine(); //Discarding hashed key
             br.readLine(); //Discarding encrypted name
             while ((line = br.readLine()) != null) {
-                byteString = line.substring(1, line.length() - 1).split(", "); //While the read line stored in Line != null, add it to the linesIn<String> ArrayList.
+                byteString = line.substring(1, line.length() - 1).split(", "); 
+                //While the read line stored in Line != null, add it to the linesIn<String> ArrayList.
                 toDecrypt = new byte[byteString.length];
                 for(int i = 0; i < byteString.length; i++){
                     toDecrypt[i] = (byte)Integer.parseInt(byteString[i]);
@@ -313,7 +323,8 @@ public class ImportExport { //File Structure:
      *
      * @param f
      */
-    public static void readDataSingle(File f){ //Takes a file f, reads the entries, puts them into the entryLists of Accounts.
+    public static void readDataSingle(File f){ 
+    //Takes a file f, reads the entries, puts them into the entryLists of Accounts.
         
         String[] byteString;
         byte[] toDecrypt;

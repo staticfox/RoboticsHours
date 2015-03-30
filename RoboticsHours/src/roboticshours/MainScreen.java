@@ -28,7 +28,6 @@ public class MainScreen extends JFrame implements TableModelListener{
      * Creates new form NewJFrame
      * @param a
      */
-    @SuppressWarnings("empty-statement")
     public MainScreen(Account a) {
         initComponents();
         defaultBorder = manualDateEntry.getBorder();
@@ -41,13 +40,13 @@ public class MainScreen extends JFrame implements TableModelListener{
             Calendar d = e.getDate();
             Calendar dm = e.getDateModified();
             data[i][0] = false;
-            data[i][1] = (d.get(Calendar.MONTH) + 1 + "/" + d.get(Calendar.DAY_OF_MONTH) + "/" + (d.get(Calendar.YEAR)));
+            data[i][1] = d;
             data[i][2] = e.getHours();
-            data[i][3] = (dm.get(Calendar.MONTH) + 1 + "/" + dm.get(Calendar.DAY_OF_MONTH) + "/" + (dm.get(Calendar.YEAR)));
+            data[i][3] = dm;
         }
         dataModel = new DefaultTableModel(data, new String [] {"", "Date", "Hours", "Date Modified"})
         {
-            Class[] types = new Class [] {java.lang.Boolean.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class};
+            Class[] types = new Class [] {Boolean.class, Calendar.class, Integer.class, Calendar.class};
             boolean[] canEdit = new boolean [] {true, true, true, false};
 
             @Override
@@ -62,7 +61,9 @@ public class MainScreen extends JFrame implements TableModelListener{
         };
         dataModel.addTableModelListener(this);
         entryTable.setModel(dataModel);
+        entryTable.setAutoCreateRowSorter(true);
         
+        CalendarRenderer dateFormat = new CalendarRenderer();
         DefaultTableCellRenderer center = new DefaultTableCellRenderer();
         center.setHorizontalAlignment(JLabel.CENTER);
         
@@ -77,7 +78,7 @@ public class MainScreen extends JFrame implements TableModelListener{
                 column.setCellRenderer(center);
             }
             else{
-                column.setCellRenderer(center);
+                column.setCellRenderer(dateFormat);
             }
         }
     }
@@ -492,7 +493,7 @@ public class MainScreen extends JFrame implements TableModelListener{
             Calendar date = new GregorianCalendar();
             String[] datePieces = manualDateEntry.getText().split("/"); //Split the date into 3 pieces.
             Object[] data = new Object[4];
-            data[3] = (date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR)));
+            data[3] = date.clone();
             
             if(datePieces[2].length() == 2){ //shorthand date form
                 datePieces[2] = ("" + date.get(Calendar.YEAR)).substring(0, 2) + datePieces[2]; //Getting the first two digits of the year. This method ensures working code after 2100
@@ -503,7 +504,7 @@ public class MainScreen extends JFrame implements TableModelListener{
             account.addEntry(new Entry(account, (int)hourSelector.getValue(), date));
             
             data[0] = false;
-            data[1] = (date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR)));
+            data[1] = date;
             data[2] = (int)hourSelector.getValue();
             dataModel.addRow(data);
             

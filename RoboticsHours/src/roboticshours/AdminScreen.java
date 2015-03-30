@@ -496,7 +496,6 @@ public class AdminScreen extends JFrame implements TableModelListener{
                     itemsToDelete = true;
                 }
                 if(delete){
-                    System.out.println("Deleting hour # " + dataModel.getValueAt(i, 3));
                     String name = (String) dataModel.getValueAt(i, 1);
                     int offset = 0;
                     for(Account a : Run.getAccountList()){

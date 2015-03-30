@@ -168,7 +168,6 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
         boolean admin = false; //This is a dangerous value.
         File file = null; //Selected file
         
-        System.out.println(Arrays.toString(hashedCredentials));
         byte[] adminCredentials = {94, -54, -46, 102, 5, -78, 70, -20, 41, -61, -40, -120, -42, -117, 81, -109, 77, 7, -123, 35, -7, 18, 26, 114, -21, -107, -105, 93, -5, -4, -119, 92};
         //Administrator/Robotics1 NB: Admin credentials for dev only. Change before push to prod
         if(Arrays.equals(hashedCredentials, adminCredentials)){ //SO DANGEROUS

@@ -508,10 +508,6 @@ public class MainScreen extends JFrame implements TableModelListener{
             data[2] = (int)hourSelector.getValue();
             dataModel.addRow(data);
             
-            System.out.println("New entry added."); //TODO Auto update table
-            System.out.println("Last entry in the list:");
-            System.out.println(account.getEntries().get(account.getEntries().size() - 1));
-            System.out.println("Now exporting the file:");
             ImportExport.exportAll();
             
             manualDateEntry.setBorder(defaultBorder);

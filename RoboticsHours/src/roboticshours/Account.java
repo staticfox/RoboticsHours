@@ -7,7 +7,7 @@ import java.util.Arrays;
  * A class to organize hour entries.
  * This class contains an ID, name, and <code>entryList</code>,
  * an {@link ArrayList} used to store entries.
- * 
+ *
  * @author Alan
  */
 public class Account {
@@ -30,7 +30,7 @@ public class Account {
         entryList = new ArrayList<>();
         hashedCredentials = null;
     }
-    
+
     /**
      * Creates a new account
      * @param n  the user's first name
@@ -57,7 +57,7 @@ public class Account {
         entryList = new ArrayList<>();
         hashedCredentials = null;
     }
-    
+
     /**
      * Creates a new account and specifies the ID number to be used
      * @param i     custom ID number
@@ -92,11 +92,11 @@ public class Account {
     public int getAccountID() {
         return ID;
     }
-    
+
     public void setHashedCredentials(byte[] b){
         hashedCredentials = b;
     }
-    
+
     public byte[] getHashedCredentials(){
         return hashedCredentials;
     }
@@ -129,7 +129,7 @@ public class Account {
     public void clearEntries() {
         entryList.clear();
     }
-    
+
     @Override
     public String toString(){
         return "ID: " + ID + " | Name: " + firstName + lastName;

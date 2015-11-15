@@ -14,9 +14,9 @@ import java.security.NoSuchAlgorithmException;
 /**
  * A class to handle encryption operations for this project.
  * This class utilizes AES symmetric encryption and the SHA-256 hash algorithm.
- * 
+ *
  * Personal note: This class is my first foray into the weird, weird world of Java's crypto platform.
- * 
+ *
  * @author Alan
  */
 public class Encryptor{
@@ -83,7 +83,7 @@ public class Encryptor{
     /**
      * Encrypts a byte array.
      * This method sets the Cipher to encrypt mode before encrypting.
-     * 
+     *
      * @param b The byte array to be encrypted
      * @return  The encrypted byte array
      * @throws IllegalBlockSizeException    Thrown if the provided data does not match the block size of AES (16)
@@ -97,7 +97,7 @@ public class Encryptor{
     /**
      * Encrypts a byte array.
      * This method sets the Cipher to decrypt mode before decrypting.
-     * 
+     *
      * @param b The byte array to be decrypted
      * @return  The decrypted byte array
      * @throws IllegalBlockSizeException    Thrown if the provided data does not match the block size of AES (16)
@@ -107,13 +107,13 @@ public class Encryptor{
         preDecrypt();
         return cipher.doFinal(b);
     }
-    
+
     //TODO
     //Note to self: Pick a hash method and stick with it. Don't leave unimplemented methods.
-    
+
     /**
      * Hashes a byte array with a static random salt for a given number of iterations.
-     * 
+     *
      * @param b             The byte array to be hashed
      * @param iterations    The number of rounds to hash the byte array
      * @return              The hashed byte array

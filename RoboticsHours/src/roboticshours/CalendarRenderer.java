@@ -5,7 +5,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 
 class CalendarRenderer extends DefaultTableCellRenderer {
-        public CalendarRenderer() { 
+        public CalendarRenderer() {
             super();
             this.setHorizontalAlignment(CENTER);
         }

@@ -20,29 +20,29 @@ import javax.swing.table.TableColumn;
  *
  * @author Alan
  */
-public class AdminScreen extends JFrame implements TableModelListener{ 
+public class AdminScreen extends JFrame implements TableModelListener{
     static JFrame mainScreen;
-    private Account account; 
-    DefaultTableModel dataModel; 
+    private Account account;
+    DefaultTableModel dataModel;
     Border defaultBorder;
-    
-    /** * Creates new form AdminScreen */ 
-    public AdminScreen() { 
+
+    /** * Creates new form AdminScreen */
+    public AdminScreen() {
         initComponents();
         defaultBorder = firstNameField.getBorder();
-        ArrayList<Entry> entries = new ArrayList<>(); 
-        for(Account a : Run.getAccountList()){ 
+        ArrayList<Entry> entries = new ArrayList<>();
+        for(Account a : Run.getAccountList()){
             entries.addAll(a.getEntries());
-        } 
-        Object[][] data = new Object[entries.size()][5]; 
-        for(int i = 0; i < entries.size(); i++){ 
+        }
+        Object[][] data = new Object[entries.size()][5];
+        for(int i = 0; i < entries.size(); i++){
             Entry e = entries.get(i);
-            Calendar d = e.getDate(); 
-            Calendar dm = e.getDateModified(); 
-            data[i][0] = false; 
-            data[i][1] = e.getUser().getAccountName().replace("+", " "); 
+            Calendar d = e.getDate();
+            Calendar dm = e.getDateModified();
+            data[i][0] = false;
+            data[i][1] = e.getUser().getAccountName().replace("+", " ");
             data[i][2] = d;
-            data[i][3] = e.getHours(); 
+            data[i][3] = e.getHours();
             data[i][4] = dm;
         }
         dataModel = new DefaultTableModel(data, new String [] {"", "Name", "Date", "Hours", "Date Modified"})
@@ -60,30 +60,30 @@ public class AdminScreen extends JFrame implements TableModelListener{
                 return canEdit [columnIndex];
             }
         };
-        dataModel.addTableModelListener(this); 
-        entryTable.setModel(dataModel); 
+        dataModel.addTableModelListener(this);
+        entryTable.setModel(dataModel);
         entryTable.setAutoCreateRowSorter(true);
-        
+
         CalendarRenderer dateFormat = new CalendarRenderer();
-        DefaultTableCellRenderer center = new DefaultTableCellRenderer(); 
-        center.setHorizontalAlignment(JLabel.CENTER); 
-        
-        TableColumn column; 
-        for (int i = 0; i < 5; i++) { 
+        DefaultTableCellRenderer center = new DefaultTableCellRenderer();
+        center.setHorizontalAlignment(JLabel.CENTER);
+
+        TableColumn column;
+        for (int i = 0; i < 5; i++) {
             column = entryTable.getColumnModel().getColumn(i);
-            if (i == 0) { 
+            if (i == 0) {
                 column.setPreferredWidth(5);
             }
-            else if(i == 3){ 
+            else if(i == 3){
                 column.setPreferredWidth(10);
-                column.setCellRenderer(center); 
+                column.setCellRenderer(center);
             }
             else if(i == 1){
                 column.setCellRenderer(center);
             }
-            else{ 
-                column.setCellRenderer(dateFormat); 
-            } 
+            else{
+                column.setCellRenderer(dateFormat);
+            }
         }
     }
 
@@ -362,7 +362,7 @@ public class AdminScreen extends JFrame implements TableModelListener{
     private void tableBackButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_tableBackButtonActionPerformed
         ((CardLayout)(mainPanel.getLayout())).show(mainPanel, "startPanel");
     }//GEN-LAST:event_tableBackButtonActionPerformed
-    
+
     @Override
     public void tableChanged(TableModelEvent e){
         String name = (String) dataModel.getValueAt(e.getFirstRow(), 1);
@@ -387,7 +387,7 @@ public class AdminScreen extends JFrame implements TableModelListener{
 
                 date.set(Integer.parseInt(datePieces[2]), Integer.parseInt(datePieces[0]) - 1, Integer.parseInt(datePieces[1]));
                 account.getEntries().get(e.getFirstRow() - offset).setDate(date);
-                
+
                 dataModel.removeTableModelListener(this); //avoiding recursive fireTableStateChanged by deregistering the listener before editing cell value
                 dataModel.setValueAt((date.get(Calendar.MONTH) + 1 + "/" + date.get(Calendar.DAY_OF_MONTH) + "/" + (date.get(Calendar.YEAR))), e.getFirstRow(), 2);
                 dataModel.addTableModelListener(this); //Strangely, none of the other setValueAt calls seem to have this issue.
@@ -408,7 +408,7 @@ public class AdminScreen extends JFrame implements TableModelListener{
             }
         }
     }
-    
+
     private boolean parseDate(String s){
         Pattern datePattern = Pattern.compile("^\\d{1,2}/\\d{1,2}/(\\d\\d){1,2}$");
         if(s.equals("")){
@@ -441,7 +441,7 @@ public class AdminScreen extends JFrame implements TableModelListener{
                 reason = "That date is out of the accepted range (1 year).";
             }
             if(dateNumbers[1] > 31){ //Months with more than 31 days
-               acceptable = false; //UNACCEPTABLE 
+               acceptable = false; //UNACCEPTABLE
                reason = DNE;
             }
             else if(dateNumbers[0] % 2 == 1 && dateNumbers[1] > 30){ //Short months with more than 30 days
@@ -484,11 +484,11 @@ public class AdminScreen extends JFrame implements TableModelListener{
             }
         }
     }
-    
+
     private void deleteButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         boolean delete = false, itemsToDelete = false;
         String message = "Are you sure you want to delete the selected entries?\nThis cannot be undone!";
-        
+
         for(int i = dataModel.getRowCount() - 1; i > -1; i--){
             if((boolean)dataModel.getValueAt(i, 0)){
                 if(!itemsToDelete){
@@ -522,7 +522,7 @@ public class AdminScreen extends JFrame implements TableModelListener{
             ImportExport.exportAll();
         }
         entryTable.clearSelection();
-        
+
     }//GEN-LAST:event_deleteButtonActionPerformed
 
     private void submitButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
@@ -530,7 +530,7 @@ public class AdminScreen extends JFrame implements TableModelListener{
         lastNameField.setBorder(defaultBorder);
         passwordField.setBorder(defaultBorder);
         passwordConfirmField.setBorder(defaultBorder);
-        
+
         if(firstNameField.getText().equals("")){
             firstNameField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         }
@@ -549,7 +549,7 @@ public class AdminScreen extends JFrame implements TableModelListener{
         if(firstNameField.getText().equals("")){
             nameViolation = true;
             message = "Please enter a name.";
-            firstNameField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));   
+            firstNameField.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
         }
         if(lastNameField.getText().equals("")){
             nameViolation = true;
@@ -592,7 +592,7 @@ public class AdminScreen extends JFrame implements TableModelListener{
             byte[] credentials = new byte[username.length + password.length]; //Creating a combined credential array that is the length of username + password
             System.arraycopy(username, 0, credentials, 0, username.length); //Copying from username at 0 to credentials at 0 for all bytes in username.
             System.arraycopy(password, 0, credentials, username.length, password.length); //Copying from password at 0 to credentials at end of username for all bytes in password.
-            
+
             Arrays.fill(username, (byte)0); //Clear username
             Arrays.fill(password, (byte)0); //Clear password
             byte[] hashedCredentials = Encryptor.hash(credentials, 1024); //Hashes the byte representation of credentials using static salt and 1024 iterations.
@@ -615,7 +615,7 @@ public class AdminScreen extends JFrame implements TableModelListener{
         passwordConfirmField.setBorder(defaultBorder);
         ((CardLayout)(mainPanel.getLayout())).show(mainPanel, "startPanel");
     }//GEN-LAST:event_newBackButtonActionPerformed
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JLabel confirmLabel;
     private JButton deleteButton;

@@ -28,11 +28,11 @@ import javax.swing.WindowConstants;
  * This screen is a basic login screen visually,
  * with a username field, password field, and a login button.
  * The complexity of this screen comes in the authentication logic.
- * 
+ *
  * @author Alan
  */
 public class LoginScreen extends JFrame implements KeyListener { //LoginScreen is a JFrame that also has a KeyListener listening for VK_ENTER.
-    
+
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;
@@ -65,7 +65,7 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
             public void paste(){}
         };
         passwordField.addKeyListener(this); //KeyListener allows VK_ENTER to "press" the login button
-        
+
         loginButton = new JButton();
         loginButton.setText("Login");
         loginButton.addActionListener(new ActionListener() {
@@ -127,12 +127,12 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
     }
 
    private void loginButtonActionPerformed(ActionEvent evt) { //This describes the actions that are taken when the login button or any of its aliases are pressed, e.g. the process of logging in.
-        
+
         ArrayList<byte[]> authList = new ArrayList<>(); //ArrayList of byte arrays from the files
         File[] fileList = new File("data").listFiles(); //Array of Files
-        
+
         Arrays.sort(fileList); //Ensuring 01, 02 ... order
-        
+
         for(File f : fileList){
             try (Scanner cs = new Scanner(f)){
                 String arrayRepresentation = cs.nextLine(); //Get the first line; it's the key bytes.
@@ -147,27 +147,27 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
                 System.out.println("File not found for iterator loginButtonActionPerformed.");
             }
         } //Now the Credential List is full of credentials. byte[]
-        
+
         byte[] username = usernameField.getText().replace(" ", "+").getBytes();
         byte[] password = Encryptor.charToByte(passwordField.getPassword()); //Get Credential's components from login screen's username/password fields.
         passwordField.setText(null); //Clearing the password field.
-        
+
         byte[] credentials = new byte[username.length + password.length]; //Creating a combined credential array that is the length of username + password
         System.arraycopy(username, 0, credentials, 0, username.length); //Copying from username at 0 to credentials at 0 for all bytes in username.
         System.arraycopy(password, 0, credentials, username.length, password.length); //Copying from password at 0 to credentials at end of username for all bytes in password.
-        
+
         Arrays.fill(username, (byte)0); //Clear username
-        
+
         Arrays.fill(password, (byte)0); //Clear password
-        
+
         byte[] hashedCredentials = Encryptor.hash(credentials, 1024); //Hashes the byte representation of credentials using static salt and 1024 iterations.
-        
+
         Arrays.fill(credentials, (byte)0); //Clear credentials
-        
+
         boolean validCredentials = false; //Prep for authentication
         boolean admin = false; //This is a dangerous value.
         File file = null; //Selected file
-        
+
         byte[] adminCredentials = {94, -54, -46, 102, 5, -78, 70, -20, 41, -61, -40, -120, -42, -117, 81, -109, 77, 7, -123, 35, -7, 18, 26, 114, -21, -107, -105, 93, -5, -4, -119, 92};
         //Administrator/Robotics1 NB: Admin credentials for dev only. Change before push to prod
         if(Arrays.equals(hashedCredentials, adminCredentials)){ //SO DANGEROUS
@@ -222,7 +222,7 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
      */
     @Override
     public void keyReleased(KeyEvent ke) {} //On ley released, do nothing.
-    
+
     /**
      *
      * @param ke
@@ -248,7 +248,7 @@ public class LoginScreen extends JFrame implements KeyListener { //LoginScreen i
         public CustomFocusTraversalPolicy(ArrayList<Component> o) {
             order = (ArrayList<Component>)o.clone(); //Sets order equal to the arrayList of components supplied
         }
-        
+
         /**
          *
          * @param focusCycleRoot

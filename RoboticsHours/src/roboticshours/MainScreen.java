@@ -62,11 +62,11 @@ public class MainScreen extends JFrame implements TableModelListener{
         dataModel.addTableModelListener(this);
         entryTable.setModel(dataModel);
         entryTable.setAutoCreateRowSorter(true);
-        
+
         CalendarRenderer dateFormat = new CalendarRenderer();
         DefaultTableCellRenderer center = new DefaultTableCellRenderer();
         center.setHorizontalAlignment(JLabel.CENTER);
-        
+
         TableColumn column;
         for (int i = 0; i < 4; i++) {
             column = entryTable.getColumnModel().getColumn(i);
@@ -377,7 +377,7 @@ public class MainScreen extends JFrame implements TableModelListener{
             manualDateEntry.setEditable(true);
         }
     }//GEN-LAST:event_currentDateActionPerformed
-    
+
     @Override
     public void tableChanged(TableModelEvent e){
         if(e.getColumn() == 1){
@@ -411,7 +411,7 @@ public class MainScreen extends JFrame implements TableModelListener{
             }
         }
     }
-    
+
     private boolean parseDate(String s){
         Pattern datePattern = Pattern.compile("^\\d{1,2}/\\d{1,2}/(\\d\\d){1,2}$");
         if(s.equals("")){
@@ -444,7 +444,7 @@ public class MainScreen extends JFrame implements TableModelListener{
                 reason = "That date is out of the accepted range (1 year).";
             }
             if(dateNumbers[1] > 31){ //Months with more than 31 days
-               acceptable = false; //UNACCEPTABLE 
+               acceptable = false; //UNACCEPTABLE
                reason = DNE;
             }
             else if(dateNumbers[0] % 2 == 1 && dateNumbers[1] > 30){ //Short months with more than 30 days
@@ -487,32 +487,32 @@ public class MainScreen extends JFrame implements TableModelListener{
             }
         }
     }
-    
+
     private void submitButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         if(parseDate(manualDateEntry.getText())){
             Calendar date = new GregorianCalendar();
             String[] datePieces = manualDateEntry.getText().split("/"); //Split the date into 3 pieces.
             Object[] data = new Object[4];
             data[3] = date.clone();
-            
+
             if(datePieces[2].length() == 2){ //shorthand date form
                 datePieces[2] = ("" + date.get(Calendar.YEAR)).substring(0, 2) + datePieces[2]; //Getting the first two digits of the year. This method ensures working code after 2100
             }
-            
+
             date.set(Integer.parseInt(datePieces[2]), Integer.parseInt(datePieces[0]) - 1, Integer.parseInt(datePieces[1]));
-            
+
             account.addEntry(new Entry(account, (int)hourSelector.getValue(), date));
-            
+
             data[0] = false;
             data[1] = date;
             data[2] = (int)hourSelector.getValue();
             dataModel.addRow(data);
-            
+
             ImportExport.exportAll();
-            
+
             manualDateEntry.setBorder(defaultBorder);
             JOptionPane.showMessageDialog(rootPane, "Added successfully!", "Success!", JOptionPane.INFORMATION_MESSAGE);
-            newBackButtonActionPerformed(null); 
+            newBackButtonActionPerformed(null);
         }
         else{
             manualDateEntry.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
@@ -522,7 +522,7 @@ public class MainScreen extends JFrame implements TableModelListener{
     private void deleteButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         boolean delete = false, itemsToDelete = false;
         String message = "Are you sure you want to delete the selected entries?\nThis cannot be undone!";
-        
+
         for(int i = dataModel.getRowCount() - 1; i > -1; i--){
             if((boolean)dataModel.getValueAt(i, 0)){
                 if(!itemsToDelete){
@@ -546,7 +546,7 @@ public class MainScreen extends JFrame implements TableModelListener{
         }
         entryTable.clearSelection();
     }//GEN-LAST:event_deleteButtonActionPerformed
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JRadioButton currentDate;
     private JLabel dateLabel;

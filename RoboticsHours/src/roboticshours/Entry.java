@@ -6,12 +6,12 @@ import java.util.GregorianCalendar;
 /**
  * A class to store data on robotics members' working hours
  * This class is pretty much the core of this project.
- * Each <code>Entry</code> contains the {@link Account} object of the user it belongs to, 
+ * Each <code>Entry</code> contains the {@link Account} object of the user it belongs to,
  * an integer number of hours worked,
- * the date that the work occurred on, 
+ * the date that the work occurred on,
  * and the date that the entry was last modified.
  * The two dates are stored using {@link GregorianCalendar} objects.
- * 
+ *
  * @author Alan
  */
 public class Entry {
@@ -22,7 +22,7 @@ public class Entry {
     private Calendar dateModified;
 
     /**
-     * Creates an <code>Entry</code> object 
+     * Creates an <code>Entry</code> object
      * @param u the user associated with the entry
      * @param h the number of hours
      * @param c the date that work was performed
@@ -61,7 +61,7 @@ public class Entry {
     public int getHours() {
         return hours;
     }
-    
+
     /**
      * Manually sets the number of hours performed.
      * This method modifies the <code>dateModified</code>.
@@ -78,7 +78,7 @@ public class Entry {
     public Calendar getDate() {
         return date;
     }
-    
+
     /**
      * Modifies the <code>date</code> and updates the <code>dateModified</code>.
      * @param d the new date
@@ -97,8 +97,8 @@ public class Entry {
 
     @Override
     public String toString() {
-        return user.getAccountID() + " " + user.getAccountName() + " " + hours + " " + 
-                date.get(Calendar.DAY_OF_MONTH) + " " + date.get(Calendar.MONTH) + " " + date.get(Calendar.YEAR) + " " + 
+        return user.getAccountID() + " " + user.getAccountName() + " " + hours + " " +
+                date.get(Calendar.DAY_OF_MONTH) + " " + date.get(Calendar.MONTH) + " " + date.get(Calendar.YEAR) + " " +
                 dateModified.get(Calendar.DAY_OF_MONTH) + " " + dateModified.get(Calendar.MONTH) + " " + dateModified.get(Calendar.YEAR);
     }
 }

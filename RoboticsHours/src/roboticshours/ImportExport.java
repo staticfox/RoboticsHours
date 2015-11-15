@@ -16,9 +16,9 @@ import javax.crypto.IllegalBlockSizeException;
 
 /**
  * This method hooks into the <code>Encryptor</code> method in order to provide data storage and retrieval methods.
- * 
- * 
- * 
+ *
+ *
+ *
  * @author Alan
  */
 public class ImportExport { //File Structure:
@@ -27,13 +27,13 @@ public class ImportExport { //File Structure:
     /**
      *  This method encrypts and exports all of the accounts in the Account list into /data/.
      */
-    
+
     public static void exportAll(){
         for (Account a : Run.getAccountList()) { //For each account in the accountlist maintained by Run.java
             exportSingleFile(a);
         }
     }
-    
+
     /**
      *
      * @param a
@@ -48,30 +48,30 @@ public class ImportExport { //File Structure:
             catch(IOException e){
                 System.out.println("IO Error: " + e);
             }
-            
-            writeDataToFile(a, new File("data/" + id + ".dat")); 
+
+            writeDataToFile(a, new File("data/" + id + ".dat"));
             //writeData from account A to a new File /data/$ID.dat
     }
-    
+
     /**
      *
      * @param a
      * @param f
      */
-    public static void writeDataToFile(Account a, File f){ 
+    public static void writeDataToFile(Account a, File f){
     //Writes the Entry data from an Account to a File. File will have filename ID.dat
-        
+
         try {
             Files.createFile(FileSystems.getDefault().getPath("data", f.getName()));
-            
+
             Encryptor.makeKey(a.getHashedCredentials());
-            
+
             try(PrintWriter out = new PrintWriter(f)){
-                
+
                 out.println(Arrays.toString(a.getHashedCredentials()));
-                
+
                 out.println(Arrays.toString(Encryptor.encrypt(a.getAccountName().getBytes())));
-                
+
                 for(Entry e : a.getEntries()){
                     out.println(Arrays.toString(Encryptor.encrypt(e.toString().getBytes())));
                 }
@@ -81,19 +81,19 @@ public class ImportExport { //File Structure:
             System.out.println("IO Error: " + e);
         }
     }
-    
+
     /**
      *  Imports all relevant encrypted data from the files in /data/.
      */
     public static void importAll(){ //TODO: Change array positions in code due to addition of name field to Entry.toString();
-        
+
         File[] fileList = new File("data").listFiles();
         Arrays.sort(fileList);
         for (File f : fileList) { //For each File in /data/
             importSingleFile(f);
         }
     }
-    
+
     /**
      *
      * @param f
@@ -106,53 +106,53 @@ public class ImportExport { //File Structure:
                 for(int i = 0; i < keyBytes.length; i++){
                     keyBytes[i] = (byte)Integer.parseInt(byteStrings[i]);
                 }
-                
+
                 Encryptor.makeKey(keyBytes);
-                
+
                 arrayRepresentation = br.readLine();
                 byteStrings = arrayRepresentation.substring(1, arrayRepresentation.length() - 1).split(", ");
                 byte[] nameBytesToDecrypt = new byte[byteStrings.length];
                 for(int i = 0; i < nameBytesToDecrypt.length; i++){
                     nameBytesToDecrypt[i] = (byte)Integer.parseInt(byteStrings[i]);
                 }
-                
+
                 try{
                     Run.addAccount(new Account(
                         Integer.parseInt(f.getName().replaceAll("[^0-9]", "")), //ID
-                        new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[0], 
+                        new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[0],
                         new String(Encryptor.decrypt(nameBytesToDecrypt)).split("[+]")[1],
                         keyBytes) //Name
                     );
                 }
                 catch(NumberFormatException | IllegalBlockSizeException | BadPaddingException e){}
-		
+
 		Arrays.fill(keyBytes, (byte)0);
         }
-            
+
         catch (IOException e) {
             System.out.println("ReadLine for Account Creation in importData failed: " + e);
         }
-        readData(f); //for each file, read the data and store in the account created above's entryList 
+        readData(f); //for each file, read the data and store in the account created above's entryList
     }
-    
-    public static void readData(File f){ 
+
+    public static void readData(File f){
     //Takes a file f, reads the entries, puts them into the entryLists of Accounts.
-        
+
         String[] byteString;
         byte[] toDecrypt;
         final ArrayList<String> stringsIn = new ArrayList<>();
-        
+
         String line;
         try(BufferedReader br = new BufferedReader(new FileReader(f))){
             br.readLine(); //Discarding hashed key
             br.readLine(); //Discarding encrypted name
             while ((line = br.readLine()) != null) {
-                byteString = line.substring(1, line.length() - 1).split(", "); 
+                byteString = line.substring(1, line.length() - 1).split(", ");
                 //While the read line stored in Line != null, add it to the linesIn<String> ArrayList.
                 toDecrypt = new byte[byteString.length];
                 for(int i = 0; i < byteString.length; i++){
                     toDecrypt[i] = (byte)Integer.parseInt(byteString[i]);
-                    
+
                 }
                 stringsIn.add(new String(Encryptor.decrypt(toDecrypt)));
             }
@@ -189,7 +189,7 @@ public class ImportExport { //File Structure:
         }
         stringsIn.clear();
     }
-    
+
     public static int getNextID(){
         int ID = 1;
         while(true){
